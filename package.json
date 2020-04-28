@@ -8,13 +8,16 @@
   "scripts": {
     "serve": "node_modules/.bin/vue-cli-service serve",
     "build": "node_modules/.bin/vue-cli-service build",
-    "lint": "node_modules/.bin/vue-cli-service lint"
+    "lint": "node_modules/.bin/vue-cli-service lint",
+    "test": "mocha"
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "mocha": "^7.1.1",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
@@ -23,6 +26,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "mocha-teamcity-reporter": "^3.0.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
