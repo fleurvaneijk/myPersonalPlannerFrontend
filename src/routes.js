@@ -1,7 +1,13 @@
-import HomeComponent from './components/Home.vue';
-import CalendarComponent from './components/calendar/Calendar.vue';
+import StartComponent from './components/start/Start.vue'
+import AgendaComponent from './components/agenda/Agenda.vue';
+import MenuComponent from './components/menu/Menu.vue';
+import PlannerComponent from './components/planner/Planner.vue';
+import SettingsComponent from './components/settings/Settings.vue';
 
 export const routes = [
-  { path: '', component: HomeComponent },
-  { path: '/calendar', component: CalendarComponent }
+  { path: '/', component: MenuComponent },
+  { path: '/agenda', component: AgendaComponent },
+  { path: '/start', component: StartComponent },
+  { path: '/planner', component: PlannerComponent },
+  { path: '/settings', component: SettingsComponent },
 ];
