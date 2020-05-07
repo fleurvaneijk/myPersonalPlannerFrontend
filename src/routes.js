@@ -9,7 +9,7 @@ export const routes = [
   { path: '/', component: MenuComponent },
   { path: '/agenda', component: AgendaComponent },
   { path: '/start', component: StartComponent },
-  { path: '/signup', component: SignUpComponent },
+  { path: '/registreren', component: SignUpComponent },
   { path: '/planner', component: PlannerComponent },
-  { path: '/settings', component: SettingsComponent },
+  { path: '/instellingen', component: SettingsComponent },
 ];

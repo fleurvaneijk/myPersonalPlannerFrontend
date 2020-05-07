@@ -1,45 +1,57 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div class="container">
+    <app-header></app-header>
+    <div class="row">
+      <div>
+        <transition name="slide" mode="out-in">
+          <router-view></router-view>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Hello World!'
-    }
-  }
+  import Header from './components/Header.vue';
+  export default {
+    components: {
+      appHeader: Header
+    },
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body {
+    padding: 30px;
+  }
 
-h1, h2 {
-  font-weight: normal;
-}
+  .slide-enter-active {
+    animation: slide-in 200ms ease-out forwards;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  .slide-leave-active {
+    animation: slide-out 200ms ease-out forwards;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  @keyframes slide-in {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
-a {
-  color: #42b983;
-}
+  @keyframes slide-out {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+  }
 </style>
