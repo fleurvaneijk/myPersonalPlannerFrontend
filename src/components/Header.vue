@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
       <div class="navbar-header">
         <router-link to="/" class="navbar-brand">Hoofdmenu</router-link>
       </div>
