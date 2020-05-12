@@ -56,12 +56,15 @@
   @import "src/variables";
 
   .wrapper {
-    width: 100%;
+    background-image: url("../../assets/background.jpg");
     text-align: center;
 
     .signup {
-      width: 50%;
-      min-width: 175px;
+      background-color: rgba(255, 255, 255, 0.75);
+      padding: 0 5% 0 5%;
+      height: calc(100vh - 51px); //51px = hight of header
+      width: 40%;
+      min-width: 249px;
       display: inline-block;
 
 

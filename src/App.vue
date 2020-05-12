@@ -20,9 +20,13 @@
 </script>
 
 <style lang="scss">
+  @import "src/variables";
+
   body {
-    padding: 30px;
-    /*background-image: url("/assets/background.jpg");*/
+    padding-top: $hight-header;
+    .container-fluid{
+      padding: 0;
+    }
   }
 
   .slide-enter-active {
