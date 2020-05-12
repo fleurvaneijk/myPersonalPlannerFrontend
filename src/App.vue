@@ -1,6 +1,5 @@
 <template>
     <div class="container-fluid">
-
       <app-header></app-header>
       <div>
         <transition name="slide" mode="out-in">
@@ -23,6 +22,7 @@
 <style lang="scss">
   body {
     padding: 30px;
+    /*background-image: url("/assets/background.jpg");*/
   }
 
   .slide-enter-active {
