@@ -1,27 +1,91 @@
 <template>
-  <form method="post">
-    <div class="container">
-      <label><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+  <div class="wrapper">
+    <div class="login">
+      <h1>Login</h1>
 
-      <label><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <form>
+        <label for="username">
+          <input type="text" placeholder="Username" id="username" v-model="username" required>
+        </label>
+        <br>
+        <label for="psw">
+          <input type="password" placeholder="Password" id="psw" v-model="psw" required>
+        </label>
+        <br>
+        <button @click="logIn">Login</button>
+      </form>
 
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
+      <span>Don't have an account yet? <a href="/#/signup" class="link">Sign up here</a></span>
+
     </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
   export default {
+    name: 'login',
+    components: {
 
-  }
+    },
+    data() {
+      return{
+        username: null,
+        psw: null
+      }
+    },
+    methods: {
+      logIn: function() {
+        if (this.username == null || this.username === "" ||
+          this.psw == null || this.psw === "") {
+          console.log("null found")
+        } else {
+          console.log(this.username, this.psw)
+        }
+
+      }
+    },
+  };
 </script>
+
+<style lang="scss">
+  @import "src/variables";
+
+  .wrapper {
+    width: 100%;
+    text-align: center;
+
+    .login {
+      width: 50%;
+      min-width: 175px;
+      display: inline-block;
+
+
+      label, input, button {
+        width: 100%
+      }
+      input {
+        background: $background-grey;
+        border: 1px solid #70728F;
+        margin: 5px 0;
+        padding: 8px;
+      }
+
+      button {
+        background: $secondary-blue;
+        padding: 9px 0;
+        margin: 10px 0 20px;
+        text-transform: uppercase;
+        color: $white;
+        border: 0;
+        border-radius: 3px;
+      }
+
+      .link {
+        color: $tertiary-orange;
+        text-decoration: underline;
+      }
+    }
+  }
+
+
+</style>

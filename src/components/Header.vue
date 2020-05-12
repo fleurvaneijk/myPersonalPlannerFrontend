@@ -2,7 +2,7 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <router-link to="/" class="navbar-brand">Hoofdmenu</router-link>
+        <router-link to="/" class="navbar-brand"><img src="../assets/logo2.png" alt=""></router-link>
       </div>
 
       <div class="collapse navbar-collapse">
@@ -47,3 +47,8 @@
     },
   }
 </script>
+<style>
+  img {
+    width: 100px;
+  }
+</style>
