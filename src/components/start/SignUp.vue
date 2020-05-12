@@ -1,21 +1,22 @@
 <template>
   <div class="wrapper">
-    <div class="login">
-      <h1>Login</h1>
+    <div class="signup">
+      <h1>Sign up</h1>
 
       <form>
-        <label for="username">
-          <input type="text" placeholder="Username" id="username" v-model="username" required>
+        <label for="uname">
+          <input type="text" placeholder="Username" id="uname" v-model="username" required>
         </label>
         <br>
         <label for="psw">
           <input type="password" placeholder="Password" id="psw" v-model="psw" required>
         </label>
+        <label for="psw2">
+          <input type="password" placeholder="Confirm Password" id="psw2" v-model="psw2" required>
+        </label>
         <br>
-        <button @click="logIn">Login</button>
+        <button type="submit" @click="signUp">Sign Up</button>
       </form>
-
-      <span>Don't have an account yet? <a href="/#/signup" class="link">Sign up here</a></span>
 
     </div>
   </div>
@@ -23,23 +24,27 @@
 
 <script>
   export default {
-    name: 'login',
+    name: 'signup',
     components: {
 
     },
     data() {
       return{
         username: null,
-        psw: null
+        psw: null,
+        psw2: null,
       }
     },
     methods: {
-      logIn: function() {
+      signUp: function() {
         if (this.username == null || this.username === "" ||
-          this.psw == null || this.psw === "") {
+          this.psw == null || this.psw === "" ||
+          this.psw2 == null || this.psw2 === "") {
           console.log("null found")
+        } else if(this.psw !== this.psw2) {
+          console.log("passwords are not the same")
         } else {
-          console.log(this.username, this.psw)
+          console.log(this.username, this.psw, this.psw2)
         }
 
       }
@@ -54,7 +59,7 @@
     width: 100%;
     text-align: center;
 
-    .login {
+    .signup {
       width: 50%;
       min-width: 175px;
       display: inline-block;
@@ -79,13 +84,6 @@
         border: 0;
         border-radius: 3px;
       }
-
-      .link {
-        color: $tertiary-orange;
-        text-decoration: underline;
-      }
     }
   }
-
-
 </style>
