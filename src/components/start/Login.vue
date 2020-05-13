@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div class="login">
+  <div id="wrapper">
+    <div id="login">
       <h1>Login</h1>
 
       <form>
@@ -15,7 +15,7 @@
         <button @click="logIn">Login</button>
       </form>
 
-      <span>Don't have an account yet? <a href="/#/signup" class="link">Sign up here</a></span>
+      <span>Don't have an account yet? <a href="/#/signup" id="link">Sign up here</a></span>
 
     </div>
   </div>
@@ -50,11 +50,11 @@
 <style lang="scss">
   @import "src/variables";
 
-  .wrapper {
+  #wrapper {
     background-image: url("../../assets/background.jpg");
     text-align: center;
 
-    .login {
+    #login {
       background-color: rgba(255, 255, 255, 0.75);
       padding: 0 5% 0 5%;
       height: calc(100vh - 51px); //51px = hight of header
@@ -83,7 +83,7 @@
         border-radius: 3px;
       }
 
-      .link {
+      #link {
         color: $tertiary-orange;
         text-decoration: underline;
       }

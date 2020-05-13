@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div class="signup">
+  <div id="wrapper">
+    <div id="signup">
       <h1>Sign up</h1>
 
       <form>
@@ -55,11 +55,11 @@
 <style lang="scss">
   @import "src/variables";
 
-  .wrapper {
+  #wrapper {
     background-image: url("../../assets/background.jpg");
     text-align: center;
 
-    .signup {
+    #signup {
       background-color: rgba(255, 255, 255, 0.75);
       padding: 0 5% 0 5%;
       height: calc(100vh - 51px); //51px = hight of header
