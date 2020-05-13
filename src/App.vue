@@ -1,13 +1,10 @@
 <template>
     <div class="container-fluid">
       <app-header></app-header>
-      <div>
-        <transition name="slide" mode="out-in">
+      <transition name="slide" mode="out-in">
           <router-view></router-view>
-        </transition>
-      </div>
+      </transition>
    </div>
-
 </template>
 
 <script>
@@ -23,9 +20,11 @@
   @import "src/variables";
 
   body {
-    padding-top: $hight-header;
+    margin-top: $height-header !important;
+    height: calc(100vh - 51px); //51px = hight of header
     .container-fluid{
       padding: 0;
+      height: 100%
     }
   }
 
