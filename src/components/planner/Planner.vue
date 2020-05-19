@@ -226,13 +226,10 @@
       }
     }
     tbody{
-      tr:nth-child(1) {
-        text-align: center;
-      }
       tr{
         background: $background-grey;
-
         td{
+          height: 100%;
           vertical-align: top;
           border-left: 1px solid $background-grey;
           border-bottom:1px solid $background-grey;
