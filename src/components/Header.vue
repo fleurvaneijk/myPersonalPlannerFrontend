@@ -21,10 +21,10 @@
               data-toggle="dropdown"
               role="button"
               aria-haspopup="true"
-              aria-expanded="false">Placeholder <span class="caret"></span></a>
+              aria-expanded="false">More <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <router-link to="/instellingen" activeClass="active" tag="li"><a>Instellingen</a></router-link>
-              <li><a href="#" @click="logOut">Uitloggen</a></li>
+              <router-link to="/settings" activeClass="active" tag="li"><a>Settings</a></router-link>
+              <li><a href="#" @click="logOut">Log out</a></li>
             </ul>
           </li>
         </ul>

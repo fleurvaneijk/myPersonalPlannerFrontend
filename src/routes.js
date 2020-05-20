@@ -5,6 +5,8 @@ import MenuComponent from './components/menu/Menu.vue';
 import PlannerComponent from './components/planner/Planner.vue';
 import SettingsComponent from './components/settings/Settings.vue';
 import HeaderComponent from './components/Header'
+import ChangeUsername from "./components/settings/ChangeUsername";
+import ChangePassword from "./components/settings/ChangePassword";
 
 export const routes = [
   { path: '' , name: 'menu', components: {
@@ -22,7 +24,10 @@ export const routes = [
   { path: '/settings' , name: 'settings', components: {
       default: SettingsComponent,
       'header-top': HeaderComponent
-    } },
+    }, children: [
+      { path: 'username', component: ChangeUsername },
+      { path: 'password', component: ChangePassword },
+    ], },
   { path: '/login', component: LoginComponent },
   { path: '/signup', component: SignUpComponent },
   { path: '*', redirect: '/' }
