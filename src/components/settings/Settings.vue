@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container nav-component">
     <div class="row">
       <div class="col-md-6">
         <h3>Settings</h3>

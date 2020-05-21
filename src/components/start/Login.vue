@@ -15,7 +15,7 @@
         <button @click="logIn">Login</button>
       </form>
 
-      <span>Don't have an account yet? <a href="/#/signup" id="link">Sign up here</a></span>
+      <span>Don't have an account yet? <a href="/signup" id="link">Sign up here</a></span>
 
     </div>
   </div>
@@ -47,7 +47,7 @@
   };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   @import "src/variables";
 
   #wrapper {
@@ -58,7 +58,7 @@
     #login {
       background-color: rgba(255, 255, 255, 0.75);
       padding: 0 5% 0 5%;
-      height: 100%; //calc(100vh - 51px); //51px = hight of header
+      height: 100%;
       width: 40%;
       min-width: 249px;
       display: inline-block;

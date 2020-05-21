@@ -1,5 +1,5 @@
 <template>
-  <div class="plannerwrapper">
+  <div class="plannerwrapper nav-component">
     <h1>Planner</h1>
     <table>
       <thead>
