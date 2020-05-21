@@ -28,7 +28,11 @@ export const routes = [
       { path: 'username', component: ChangeUsername },
       { path: 'password', component: ChangePassword },
     ], },
-  { path: '/login', component: LoginComponent },
-  { path: '/signup', component: SignUpComponent },
+  { path: '/login', name: 'login', components: {
+      default: LoginComponent,
+    } },
+  { path: '/signup', name: 'signup', components: {
+      default: SignUpComponent,
+    } },
   { path: '*', redirect: '/' }
 ];

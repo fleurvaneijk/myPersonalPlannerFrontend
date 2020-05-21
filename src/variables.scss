@@ -6,3 +6,21 @@ $black: #000;
 $white: #fff;
 
 $height-header: 51px;
+
+
+.nav-component {
+  margin-top: $height-header !important;
+  height: calc(100vh - 51px); //51px = hight of header
+  .container-fluid {
+    padding: 0;
+    height: 100%
+  }
+}
+
+.no-nav-component {
+  height: 100vh;
+  .container-fluid {
+    padding: 0;
+    height: 100%
+  }
+}

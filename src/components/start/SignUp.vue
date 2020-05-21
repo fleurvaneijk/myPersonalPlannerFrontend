@@ -11,6 +11,7 @@
         <label for="psw">
           <input type="password" placeholder="Password" id="psw" v-model="psw" required>
         </label>
+        <br>
         <label for="psw2">
           <input type="password" placeholder="Confirm Password" id="psw2" v-model="psw2" required>
         </label>
@@ -52,7 +53,7 @@
   };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   @import "src/variables";
 
   #wrapper {

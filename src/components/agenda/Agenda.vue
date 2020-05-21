@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="nav-component">
     <h1>Agenda</h1>
     <table>
       <thead>

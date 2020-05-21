@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-      <router-view name="header-top"></router-view>
+      <router-view name="header-top" ></router-view>
       <transition name="slide" mode="out-in">
           <router-view></router-view>
       </transition>
@@ -16,9 +16,8 @@
   @import "src/variables";
 
   body {
-    margin-top: $height-header !important;
-    height: calc(100vh - 51px); //51px = hight of header
-    .container-fluid{
+    height: 100vh;
+    .container-fluid {
       padding: 0;
       height: 100%
     }
