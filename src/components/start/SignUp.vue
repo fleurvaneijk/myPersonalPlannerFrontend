@@ -56,7 +56,7 @@
           this.errorNotSame = true;
         } else {
           userService.register(this.username, this.psw).then(() => {
-            this.$router.push("/")
+            this.$router.push("/login")
           }).catch(() => {
             this.errorUsername = true;
           })

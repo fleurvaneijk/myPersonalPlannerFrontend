@@ -37,7 +37,7 @@ function register(username, password) {
 
 function logout() {
   localStorage.removeItem('user');
-  location.reload(true)
+  // location.reload(true)
 }
 
 function getUsername() {
