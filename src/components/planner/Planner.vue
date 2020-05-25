@@ -206,6 +206,10 @@
             }
           }
 
+          span {
+            display: block;
+          }
+
           .long {
             display: block;
           }
