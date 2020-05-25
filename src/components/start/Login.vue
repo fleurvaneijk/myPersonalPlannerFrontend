@@ -3,7 +3,10 @@
     <div id="login">
       <h1>Login</h1>
 
-      <form>
+      <form v-on:submit.prevent="logIn">
+        <div class="alert alert-danger" role="alert" v-if="error">
+          Username or Password is incorrect
+        </div>
         <label for="username">
           <input type="text" placeholder="Username" id="username" v-model="username" required>
         </label>
@@ -12,7 +15,7 @@
           <input type="password" placeholder="Password" id="psw" v-model="psw" required>
         </label>
         <br>
-        <button @click="logIn">Login</button>
+        <button type="submit">Login</button>
       </form>
 
       <span>Don't have an account yet? <a href="/signup" id="link">Sign up here</a></span>
@@ -22,6 +25,8 @@
 </template>
 
 <script>
+  import {userService} from "../../services/user.service";
+
   export default {
     name: 'login',
     components: {
@@ -30,7 +35,8 @@
     data() {
       return{
         username: null,
-        psw: null
+        psw: null,
+        error: false
       }
     },
     methods: {
@@ -39,7 +45,11 @@
           this.psw == null || this.psw === "") {
           console.log("null found")
         } else {
-          console.log(this.username, this.psw)
+          userService.login(this.username, this.psw).then(() => {
+            this.$router.push("/")
+          }).catch(() => {
+            this.error = true;
+          })
         }
 
       }

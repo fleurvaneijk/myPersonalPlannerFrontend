@@ -3,7 +3,13 @@
     <div id="signup">
       <h1>Sign up</h1>
 
-      <form>
+      <form v-on:submit.prevent="signUp">
+        <div class="alert alert-danger" role="alert" v-if="errorUsername">
+          Username is taken
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="errorNotSame">
+          Passwords are not the same
+        </div>
         <label for="uname">
           <input type="text" placeholder="Username" id="uname" v-model="username" required>
         </label>
@@ -16,7 +22,7 @@
           <input type="password" placeholder="Confirm Password" id="psw2" v-model="psw2" required>
         </label>
         <br>
-        <button type="submit" @click="signUp">Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
 
     </div>
@@ -24,6 +30,8 @@
 </template>
 
 <script>
+  import {userService} from "../../services/user.service";
+
   export default {
     name: 'signup',
     components: {
@@ -34,6 +42,8 @@
         username: null,
         psw: null,
         psw2: null,
+        errorUsername: false,
+        errorNotSame: false
       }
     },
     methods: {
@@ -43,9 +53,13 @@
           this.psw2 == null || this.psw2 === "") {
           console.log("null found")
         } else if(this.psw !== this.psw2) {
-          console.log("passwords are not the same")
+          this.errorNotSame = true;
         } else {
-          console.log(this.username, this.psw, this.psw2)
+          userService.register(this.username, this.psw).then(() => {
+            this.$router.push("/")
+          }).catch(() => {
+            this.errorUsername = true;
+          })
         }
 
       }
