@@ -50,7 +50,6 @@
 </template>
 
 <script>
-
   import {userService} from '../services/user.service';
 
   export default {
@@ -62,7 +61,8 @@
     },
     methods: {
       logOut() {
-        userService.logout()
+        userService.logout();
+        this.$router.push("/login");
       }
     },
   }
