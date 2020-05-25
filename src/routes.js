@@ -4,35 +4,71 @@ import AgendaComponent from './components/agenda/Agenda.vue';
 import MenuComponent from './components/menu/Menu.vue';
 import PlannerComponent from './components/planner/Planner.vue';
 import SettingsComponent from './components/settings/Settings.vue';
-import HeaderComponent from './components/Header'
-import ChangeUsername from "./components/settings/ChangeUsername";
-import ChangePassword from "./components/settings/ChangePassword";
+import HeaderComponent from './components/Header.vue'
+import NotFoundComponent from './components/404NotFound.vue'
+import ChangeUsername from './components/settings/ChangeUsername.vue';
+import ChangePassword from './components/settings/ChangePassword.vue';
 
 export const routes = [
-  { path: '' , name: 'menu', components: {
-    default: MenuComponent,
-    'header-top': HeaderComponent
-  } },
-  { path: '/agenda' , name: 'agenda', components: {
+  {
+    path: '',
+    name: 'menu',
+    components: {
+      default: MenuComponent,
+      'header-top': HeaderComponent
+    }
+  },
+
+  {
+    path: '/agenda' ,
+    name: 'agenda',
+    components: {
       default: AgendaComponent,
       'header-top': HeaderComponent
-    } },
-  { path: '/planner' , name: 'planner', components: {
+    }
+  },
+
+  { path: '/planner' ,
+    name: 'planner',
+    components: {
       default: PlannerComponent,
       'header-top': HeaderComponent
-    } },
-  { path: '/settings' , name: 'settings', components: {
+    }
+  },
+
+  {
+    path: '/settings' ,
+    name: 'settings',
+    components: {
       default: SettingsComponent,
       'header-top': HeaderComponent
-    }, children: [
+    },
+    children: [
       { path: 'username', component: ChangeUsername },
       { path: 'password', component: ChangePassword },
-    ], },
-  { path: '/login', name: 'login', components: {
+    ],
+  },
+
+  {
+    path: '/login',
+    name: 'login',
+    components: {
       default: LoginComponent,
-    } },
-  { path: '/signup', name: 'signup', components: {
+    }
+  },
+
+  {
+    path: '/signup',
+    name: 'signup',
+    components: {
       default: SignUpComponent,
-    } },
-  { path: '*', redirect: '/' }
+    }
+  },
+
+  {
+    path: '*',
+    components: {
+      default: NotFoundComponent
+    }
+  }
 ];
