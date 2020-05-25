@@ -1,24 +1,29 @@
 <template>
   <div id="wrapper">
-    <div id="login">
-      <h1>Login</h1>
+    <div id="signup">
+      <h1>Sign up</h1>
 
-      <form v-on:submit.prevent="logIn">
-        <div class="alert alert-danger" role="alert" v-if="error">
-          Username or Password is incorrect
+      <form v-on:submit.prevent="signUp">
+        <div class="alert alert-danger" role="alert" v-if="errorUsername">
+          Username is taken
         </div>
-        <label for="username">
-          <input type="text" placeholder="Username" id="username" v-model="username" required>
+        <div class="alert alert-danger" role="alert" v-if="errorNotSame">
+          Passwords are not the same
+        </div>
+        <label for="uname">
+          <input type="text" placeholder="Username" id="uname" v-model="username" required>
         </label>
         <br>
         <label for="psw">
           <input type="password" placeholder="Password" id="psw" v-model="psw" required>
         </label>
         <br>
-        <button type="submit">Login</button>
+        <label for="psw2">
+          <input type="password" placeholder="Confirm Password" id="psw2" v-model="psw2" required>
+        </label>
+        <br>
+        <button type="submit">Sign Up</button>
       </form>
-
-      <span>Don't have an account yet? <a href="/signup" id="link">Sign up here</a></span>
 
     </div>
   </div>
@@ -28,7 +33,7 @@
   import {userService} from "../../services/user.service";
 
   export default {
-    name: 'login',
+    name: 'signup',
     components: {
 
     },
@@ -36,19 +41,24 @@
       return{
         username: null,
         psw: null,
-        error: false
+        psw2: null,
+        errorUsername: false,
+        errorNotSame: false
       }
     },
     methods: {
-      logIn: function() {
+      signUp: function() {
         if (this.username == null || this.username === "" ||
-          this.psw == null || this.psw === "") {
+          this.psw == null || this.psw === "" ||
+          this.psw2 == null || this.psw2 === "") {
           console.log("null found")
+        } else if(this.psw !== this.psw2) {
+          this.errorNotSame = true;
         } else {
-          userService.login(this.username, this.psw).then(() => {
-            this.$router.push("/")
+          userService.register(this.username, this.psw).then(() => {
+            this.$router.push("/login")
           }).catch(() => {
-            this.error = true;
+            this.errorUsername = true;
           })
         }
 
@@ -65,7 +75,7 @@
     background-image: url("../../assets/background.jpg");
     text-align: center;
 
-    #login {
+    #signup {
       background-color: rgba(255, 255, 255, 0.75);
       padding: 0 5% 0 5%;
       height: 100%;
@@ -73,10 +83,10 @@
       min-width: 249px;
       display: inline-block;
 
+
       label, input, button {
         width: 100%
       }
-
       input {
         background: $background-grey;
         border: 1px solid #70728F;
@@ -93,13 +103,6 @@
         border: 0;
         border-radius: 3px;
       }
-
-      #link {
-        color: $tertiary-orange;
-        text-decoration: underline;
-      }
     }
   }
-
-
 </style>
