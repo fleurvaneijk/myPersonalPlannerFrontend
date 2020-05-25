@@ -1,45 +1,55 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+    <div class="container-fluid">
+      <router-view name="header-top" ></router-view>
+      <transition name="slide" mode="out-in">
+          <router-view></router-view>
+      </transition>
+   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Hello World!'
-    }
-  }
+  export default {
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import "src/variables";
 
-h1, h2 {
-  font-weight: normal;
-}
+  body {
+    height: 100vh;
+    .container-fluid {
+      padding: 0;
+      height: 100%
+    }
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  .slide-enter-active {
+    animation: slide-in 200ms ease-out forwards;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  .slide-leave-active {
+    animation: slide-out 200ms ease-out forwards;
+  }
 
-a {
-  color: #42b983;
-}
+  @keyframes slide-in {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+  }
 </style>

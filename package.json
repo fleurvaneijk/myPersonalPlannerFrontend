@@ -12,12 +12,17 @@
     "test": "mocha"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
-    "mocha": "^7.1.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^3.4.1",
+    "core-js": "^3.6.5",
+    "ical.js": "^1.4.0",
+    "mocha": "^7.1.2",
     "node-sass": "^4.14.1",
     "request": "^2.88.2",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
+    "vue-axios": "^2.1.5",
+    "vue-mc": "^0.6.0",
     "vue-router": "^3.1.6",
     "vuex": "^3.3.0"
   },
