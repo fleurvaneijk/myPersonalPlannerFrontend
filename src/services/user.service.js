@@ -17,6 +17,7 @@ function login(username, password) {
       if (response.data) {
         response.data.authdata = window.btoa(username + ':' + password);
         localStorage.setItem('user', JSON.stringify(response.data));
+        requests.makeInstance();
       }
       return response;
     });
@@ -37,6 +38,7 @@ function register(username, password) {
 
 function logout() {
   localStorage.removeItem('user');
+  requests.makeInstance();
   // location.reload(true)
 }
 

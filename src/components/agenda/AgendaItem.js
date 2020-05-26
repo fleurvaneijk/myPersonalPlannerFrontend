@@ -15,7 +15,7 @@ export default class AgendaItem extends Model {
 
   mutations() {
     return {
-      id: (id) => Number(id) || null,
+      id: String,
       timestampBegin: (timestampBegin) => Number(timestampBegin) || null,
       timestampEnd: (timestampEnd) => Number(timestampEnd) || null,
       title: String,
@@ -26,10 +26,6 @@ export default class AgendaItem extends Model {
 
   setOverlapping(overlapping) {
       this.overlapping = overlapping;
-      for (let overlappingItemIndex in overlapping) {
-        let overlappingItem = overlapping[overlappingItemIndex]
-        console.log(overlappingItem);
-      }
   }
 }
 
