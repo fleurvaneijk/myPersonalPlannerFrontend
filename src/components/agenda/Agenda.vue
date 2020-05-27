@@ -122,7 +122,7 @@
         let date = this.week[day];
         let dateBegin = new Date(date);
         dateBegin.setHours(0);
-        dateBegin.setMinutes(0);
+        dateBegin.setMinutes(1);
         dateBegin.setSeconds(0);
         dateBegin.setMilliseconds(0);
         let dateEnd = new Date(date);
