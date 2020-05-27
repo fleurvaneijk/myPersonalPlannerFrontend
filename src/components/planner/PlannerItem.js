@@ -9,7 +9,6 @@ export default class PlannerItem extends Model {
       timestampEnd: null,
       title: null,
       description: null,
-      overlapping: []
     }
   }
 
@@ -20,16 +19,7 @@ export default class PlannerItem extends Model {
       timestampEnd: (timestampEnd) => Number(timestampEnd) || null,
       title: String,
       description: String,
-      overlapping: []
     }
-  }
-
-  setOverlapping(overlapping) {
-      this.overlapping = overlapping;
-      for (let overlappingItemIndex in overlapping) {
-        let overlappingItem = overlapping[overlappingItemIndex]
-        console.log(overlappingItem);
-      }
   }
 }
 

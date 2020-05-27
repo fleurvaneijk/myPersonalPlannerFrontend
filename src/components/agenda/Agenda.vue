@@ -131,7 +131,7 @@
         dateEnd.setSeconds(59);
         dateEnd.setMilliseconds(0)
 
-        return agendaItems.getAppointmentsBetweenDates(dateBegin.getTime() / 1000, dateEnd.getTime() / 1000)
+        return agendaItems.getAppointmentsBetweenDates(dateBegin.getTime(), dateEnd.getTime())
       },
       findOverlappingAppointments(day) {
         let appointments = this.appointmentsInWeek[day].models
@@ -153,8 +153,8 @@
           for (let k in cal) {
             var ev = cal[k];
             if (cal[k].type === 'VEVENT') {
-              let timeBegin = ev.start.getTime() / 1000;
-              let timeEnd = ev.end.getTime() / 1000;
+              let timeBegin = ev.start.getTime();
+              let timeEnd = ev.end.getTime();
               let newItem = new AgendaItem({id: ev.uid, timestampBegin: timeBegin, timestampEnd: timeEnd, title: ev.summary, description: ev.location });
               agendaItems.add(newItem);
               this.loadNewDates();

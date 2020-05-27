@@ -71,33 +71,7 @@
     created() {
       plannerItems = new PlannerItems();
       let plannerItem = new PlannerItem({id: 1, timestampBegin: 1589364000, timestampEnd: 1589374800, title: "Test1", description: "Test" });
-      let plannerItem2 = new PlannerItem({id: 2, timestampBegin: 1589358600, timestampEnd: 1589362200, title: "Test2", description: "Test" });
-      let plannerItem3 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem4 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem5 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem6 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem7 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem8 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem9 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem10 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem11 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem12 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem13 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
-      let plannerItem14 = new PlannerItem({id: 3, timestampBegin: 1589358600, timestampEnd: 1589382000, title: "Overlapping", description: "Test" });
       plannerItems.add(plannerItem);
-      plannerItems.add(plannerItem2);
-      plannerItems.add(plannerItem3);
-      plannerItems.add(plannerItem4);
-      plannerItems.add(plannerItem5);
-      plannerItems.add(plannerItem6);
-      plannerItems.add(plannerItem7);
-      plannerItems.add(plannerItem8);
-      plannerItems.add(plannerItem9);
-      plannerItems.add(plannerItem10);
-      plannerItems.add(plannerItem11);
-      plannerItems.add(plannerItem12);
-      plannerItems.add(plannerItem13);
-      plannerItems.add(plannerItem14);
       this.now = new Date();
       this.loadNewDates();
     },
@@ -151,7 +125,7 @@
         dateEnd.setSeconds(59);
         dateEnd.setMilliseconds(0)
 
-        let items = plannerItems.getAppointmentsBetweenDates(dateBegin.getTime() / 1000, dateEnd.getTime() / 1000);
+        let items = plannerItems.getAppointmentsBetweenDates(dateBegin.getTime(), dateEnd.getTime());
         return items.models;
       }
     }
