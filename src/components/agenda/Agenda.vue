@@ -111,7 +111,7 @@
         date.setMinutes(((60 / this.fractionOfHour) * ((index - 1) % this.fractionOfHour)));
         date.setSeconds(0);
         date.setMilliseconds(0);
-        return date / 1000;
+        return date;
       },
       getAppointments(id, index) {
         let timestamp = this.getTimeStamp(id, index);
