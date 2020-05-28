@@ -5,8 +5,8 @@ export default class PlannerItem extends Model {
   defaults () {
     return {
       id: null,
-      timestampBegin: null,
-      timestampEnd: null,
+      day: null,
+      owner: null,
       title: null,
       description: null,
     }
@@ -15,8 +15,7 @@ export default class PlannerItem extends Model {
   mutations() {
     return {
       id: (id) => Number(id) || null,
-      timestampBegin: (timestampBegin) => Number(timestampBegin) || null,
-      timestampEnd: (timestampEnd) => Number(timestampEnd) || null,
+      day: (day) => Number(day),
       title: String,
       description: String,
     }
@@ -29,9 +28,10 @@ export class PlannerItems extends Collection {
     return PlannerItems;
   }
 
-  getAppointmentsBetweenDates(begin, end) {
+  //returns the appointments for day x
+  getAppointmentsForDay(id , owner) {
     return this.filter((appointment) => {
-      return appointment.timestampBegin <= end && appointment.timestampEnd >= begin;
+      return appointment.day === id && appointment.owner === owner;
     })
   }
 
