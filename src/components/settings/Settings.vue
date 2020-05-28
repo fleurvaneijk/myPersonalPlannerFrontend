@@ -6,7 +6,7 @@
         <ul>
           <li><router-link tag="button" class="btn btn-primary" :to="'/settings/username'">Change username</router-link></li>
           <li><router-link tag="button" class="btn btn-primary" :to="'/settings/password'">Change password</router-link></li>
-          <li><button type="button" class="btn btn-danger" @click="deleteAccount">Delete account</button></li>
+          <li><router-link tag="button" class="btn btn-danger" :to="'/settings/delete-account'">Delete account</router-link></li>
         </ul>
       </div>
       <div class="col-md-6">
@@ -19,9 +19,7 @@
 <script>
   export default {
     methods: {
-      deleteAccount() {
-        console.log("account exploded");
-      }
+
     }
   }
 </script>

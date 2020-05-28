@@ -5,7 +5,10 @@ export const userService = {
   logout,
   isLoggedIn,
   getUsername,
-  register
+  register,
+  changeUsername,
+  changePassword,
+  deleteAccount,
   //getAll,
 };
 
@@ -33,6 +36,44 @@ function register(username, password) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
     return response;
+  });
+}
+
+function changeUsername(username, password, newUsername) {
+  return requests.getInstance().post('/api/User/changeusername', {
+    Username: username,
+    Password: password,
+    NewUsername: newUsername
+  }).then(response => {
+    if (response.data) {
+      logout();
+      login(newUsername, password).then(location.reload());
+    }
+    return response;
+  });
+}
+
+function changePassword(username, password, newPassword) {
+  return requests.getInstance().post('/api/User/changepassword', {
+    Username: username,
+    Password: password,
+    NewPassword: newPassword
+  }).then(response => {
+    if (response.data) {
+      logout();
+      login(username, newPassword).then(location.reload());
+    }
+  });
+}
+
+function deleteAccount(username, password) {
+  return requests.getInstance().delete('/api/User/deleteaccount', {
+    data: {
+      Username: username,
+      Password: password,
+    },
+  }).then(() => {
+    logout();
   });
 }
 
