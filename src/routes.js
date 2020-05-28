@@ -3,6 +3,7 @@ import SignUpComponent from './components/start/SignUp.vue'
 import AgendaComponent from './components/agenda/Agenda.vue';
 import MenuComponent from './components/menu/Menu.vue';
 import PlannerComponent from './components/planner/Planner.vue';
+import PlannerTableComponent from './components/planner/Table.vue';
 import SettingsComponent from './components/settings/Settings.vue';
 import HeaderComponent from './components/Header.vue'
 import NotFoundComponent from './components/404NotFound.vue'
@@ -34,7 +35,10 @@ export const routes = [
     components: {
       default: PlannerComponent,
       'header-top': HeaderComponent
-    }
+    },
+    children: [
+      { path: 'table', component: PlannerTableComponent }
+    ],
   },
 
   {
