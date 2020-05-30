@@ -1,6 +1,13 @@
 <template>
   <div class="nav-component">
     <h1>Agenda</h1>
+    <form v-on:submit.prevent="changeAgenda">
+      <label for="agendaLink">
+        <input type="text" placeholder="agendaLink" id="agendaLink" v-model="agendaLink" required>
+      </label>
+      <br>
+      <button type="submit">Change Agenda</button>
+    </form>
     <table>
       <thead>
       <tr>
@@ -52,12 +59,13 @@
   import {days, monthsLong, monthsShort} from "./../../store/store";
   import {getDaysOfWeek, getWeekNumber, isToday} from "../../store/actions";
   import {requests} from "../../api/requests";
+  import {userService} from "../../services/user.service";
   const ical = require('ical');
 
   let agendaItems;
   agendaItems = null;
 
-  export default ({
+  export default {
     data:() =>{
       return {
         week: [],
@@ -69,6 +77,7 @@
         monthsShort: monthsShort,
         appointmentsInWeek: [],
         fractionOfHour: 2,
+        agendaLink: userService.getAgendaLink()
       }
     },
     created() {
@@ -162,8 +171,11 @@
           }
         });
       },
+      changeAgenda() {
+        userService.changeAgendaLink(this.agendaLink);
+      }
     }
-  });
+  }
 </script>
 
 <style scoped lang="scss">

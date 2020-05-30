@@ -10,6 +10,8 @@ export const userService = {
   changePassword,
   deleteAccount,
   //getAll,
+  getAgendaLink,
+  changeAgendaLink
 };
 
 function login(username, password) {
@@ -86,6 +88,22 @@ function logout() {
 function getUsername() {
   let user = JSON.parse(localStorage.getItem('user'));
   return user.username;
+}
+
+function getAgendaLink() {
+  let user = JSON.parse(localStorage.getItem('user'));
+  return user.agendaLink;
+}
+
+function changeAgendaLink(agendaLink) {
+  console.log(agendaLink);
+  return requests.getInstance().post('/api/User/changeagenda', {
+    AgendaLink: agendaLink
+  }).then(()=>{
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.agendaLink = agendaLink;
+    localStorage.setItem("user", JSON.stringify(user));
+  });
 }
 
 // function getAll() {
