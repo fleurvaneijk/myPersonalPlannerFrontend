@@ -1,4 +1,7 @@
 import {now} from "./store";
+import {requests} from "../api/requests";
+import AgendaItem, {AgendaItems} from "../components/agenda/AgendaItem";
+const ical = require('ical');
 
 export const getWeekNumber = (date) =>
 {
@@ -33,6 +36,30 @@ export const getDaysOfWeek = (date) => {
     current.setDate(current.getDate() +1);
   }
   return week;
+}
+
+export const loadICal = (update) => {
+  let agendaItems = new AgendaItems();
+  requests.getInstance().get("/api/agenda/").then(response => {
+    let items = response.data;
+    let cal = ical.parseICS(items);
+    for (let item in cal) {
+      var event = cal[item];
+      if (cal[item].type === 'VEVENT') {
+        let timeBegin = event.start.getTime();
+        let timeEnd = event.end.getTime();
+        let newItem = new AgendaItem({
+          id: event.uid,
+          timestampBegin: timeBegin,
+          timestampEnd: timeEnd,
+          title: event.summary,
+          description: event.location
+        });
+        agendaItems.add(newItem);
+      }
+    }
+    update(agendaItems);
+  });
 }
 
 

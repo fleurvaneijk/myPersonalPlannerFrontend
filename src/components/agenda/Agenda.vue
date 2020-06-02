@@ -55,12 +55,10 @@
 </template>
 
 <script>
-  import AgendaItem, {AgendaItems} from "./AgendaItem";
+  import {AgendaItems} from "./AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
-  import {getDaysOfWeek, getWeekNumber, isToday} from "../../store/actions";
-  import {requests} from "../../api/requests";
+  import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
   import {userService} from "../../services/user.service";
-  const ical = require('ical');
 
   let agendaItems;
   agendaItems = null;
@@ -139,7 +137,6 @@
         dateEnd.setMinutes(59);
         dateEnd.setSeconds(59);
         dateEnd.setMilliseconds(0)
-
         return agendaItems.getAppointmentsBetweenDates(dateBegin.getTime(), dateEnd.getTime())
       },
       findOverlappingAppointments(day) {
@@ -155,20 +152,10 @@
           appointment.setOverlapping(overlapping);
         }
       },
-      loadICal() {
-        requests.getInstance().get("/api/agenda/").then(response => {
-          let items = response.data;
-          let cal = ical.parseICS(items);
-          for (let k in cal) {
-            var ev = cal[k];
-            if (cal[k].type === 'VEVENT') {
-              let timeBegin = ev.start.getTime();
-              let timeEnd = ev.end.getTime();
-              let newItem = new AgendaItem({id: ev.uid, timestampBegin: timeBegin, timestampEnd: timeEnd, title: ev.summary, description: ev.location });
-              agendaItems.add(newItem);
-              this.loadNewDates();
-            }
-          }
+      loadICal(){
+        agendaItems = loadICal((newAgendaItems) => {
+          agendaItems = newAgendaItems;
+          this.loadNewDates();
         });
       },
       changeAgenda() {

@@ -101,5 +101,16 @@
     }
   }
 
+  @media(max-width:1620px){
+    .wrapper {
+      margin: 0 5%;
+    }
+  }
+
+  @media(max-width:1260px){
+    .wrapper {
+      margin: 0 1%;
+    }
+  }
 
 </style>
