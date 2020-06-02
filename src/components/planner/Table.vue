@@ -1,38 +1,28 @@
 <template>
-  <table >
-
+  <table>
     <thead>
       <tr>
-        <td id="cornerblock"></td>
+        <td></td>
         <th v-for="day in daysInWeek" v-bind:key="day.id">
-          <span id="long">{{ day.long }}</span>
-          <span id="short">{{ day.short }}</span>
+          <span id="day-name-long">{{ day.long }}</span>
+          <span id="day-name-short">{{ day.short }}</span>
         </th>
       </tr>
     </thead>
 
     <tbody>
       <tr v-for="user in getUsers()" v-bind:key="user.username">
-
         <td id="username">{{ user.username }}</td>
-
         <td id="cell" v-for="day in daysInWeek" v-bind:key="day.id">
-
           <template v-for="appoinment in getAppointments(day.id, user.username)">
-
             <div class="item" v-bind:key="appoinment.get('id')">
-              <p>{{ appoinment.get("title") }}</p>
-              <p> {{ appoinment.get("description") }}</p>
+              <p id="title">{{ appoinment.get("title") }} </p>
+              <p id="description">{{ appoinment.get("description") }}</p>
             </div>
-
           </template>
-
         </td>
-
       </tr>
-
     </tbody>
-
   </table>
 </template>
 
@@ -84,8 +74,6 @@
       users.add(user1);
       users.add(user2);
       users.add(user3);
-
-
     },
     methods: {
       getUsers() {
@@ -112,38 +100,28 @@
     width: 100%;
 
     thead {
-      tr {
-        td#cornerblock {
-          background-color: $primary-blue;
-        }
+      background-color: rgba(255, 255, 255, 0.50);
+      color: $black;
 
-        th {
-          height: 50px;
-          background: $primary-blue;
-          color: $secondary-blue;
-          text-align: center;
+      th {
+        border-left: dotted 1px $tertiary-orange;
+        height: 50px;
+        text-align: center;
 
-          &:first-child {
-            border-radius: 3px 0 0 0;
-            width: 80px;
-          }
-
-          span#short {
-            display: none;
-          }
+        span#day-name-short {
+          display: none;
         }
       }
     }
 
     tbody {
       tr {
-       /* background: $background-grey;*/
 
         td#cell {
-          width: 180px;
+          /*max-width: 180px;*/
+          border: dotted 1px $tertiary-orange;
           vertical-align: top;
           text-align: center;
-          border: 2px black;
         }
 
         td#username {
@@ -151,51 +129,53 @@
           vertical-align: center;
           text-align: center;
           font-weight: bold;
-          background-color: $primary-blue;
-          color: $secondary-blue;
+          background-color: #fcf0f7;
+          color: $black;
+          border-top: dotted 1px $tertiary-orange;
+          border-bottom: dotted 1px $tertiary-orange;
         }
 
         .item {
           text-align: left;
           display: inline-block;
-          margin: 3px;
+          margin: 10px;
           padding: 3px 8px;
-          width: 150px;
-          height: 100px;
+          width: 120px;
+          height: 85px;
           border-radius: 5px;
-          border: 2px solid $primary-blue;
-          background-color: $secondary-blue;
+          border: 2px solid $primary-blue-transparent; /*TODO: make color user bound*/
+          background-color: $secondary-blue-transparent;
           color: $background-grey;
         }
       }
     }
   }
 
-    @media(max-width:60em){
-      thead {
-        tr {
-          th {
-            span#long {
-              display: none;
-            }
-
-            span#short {
-              display: block;
-            }
-
-          }
-        }
-      }
+  @media(max-width:960px){
+    span#day-name-long {
+      display: none;
     }
-
-    @media(max-width:27em){
-      thead {
-        tr {
-          th {
-            font-size: 65%;
-          }
-        }
-      }
+    span#day-name-short {
+      display: block !important;
     }
+  }
+
+  @media(max-width: 1160px){
+    .item {
+      width: 100px !important;
+      height: 75px !important;
+      margin: 3px !important;
+    }
+  }
+
+  @media(max-width: 820px){
+    .item {
+      width: 80px !important;
+      height: 50px !important;
+    }
+    p#description {
+      display: none;
+    }
+  }
 
 </style>
