@@ -33,7 +33,10 @@
           </ul>
         </div>
 
-        <plannertable id="table" ></plannertable>
+        <div v-for="planner in planners.models" v-bind:key="planner.id">
+          <h2>{{planner.title}}</h2>
+          <planner-table  :planner="planner" id="table" ></planner-table>
+        </div>
       </div>
 
     </div>
@@ -41,7 +44,7 @@
 </template>
 
 <script>
-  import plannertable  from './Table.vue'
+  import Table  from './Table.vue'
   import { plannerService } from "../../services/planner.service"
   import Planner, {Planners} from "../../models/Planner";
   import { PlannerItems } from "../../models/PlannerItem";
@@ -50,15 +53,15 @@
   export default {
     name: 'Planner',
     components: {
-      plannertable
+      "planner-table" : Table
     },
     data() {
       return{
         planners: null
       }
     },
-    created() {
-      this.getPlanners();
+    async created() {
+      this.planners = await this.getPlanners();
 
     },
     methods: {
@@ -68,7 +71,7 @@
 
       async getPlanners() {
         let plannerIds = await plannerService.getPlannerIds();
-        this.planners = new Planners();
+        let planners = new Planners();
 
         for (const id of plannerIds) {
           let planner = await plannerService.getPlanner(id);
@@ -80,11 +83,9 @@
           })
 
           let plannerModel = new Planner({id: planner.id, title: planner.title, plannerItems: itemsModel});
-          this.planners.add(plannerModel)
+          planners.add(plannerModel)
         }
-
-        console.log(this.planners);
-
+        return planners;
       },
 
       createNewPlanner() {

@@ -4,6 +4,7 @@ export const plannerService = {
   getPlannerIds,
   getPlanner,
   getPlannerItems,
+  getUsersInPlanner,
 };
 
 function getPlannerIds(){
@@ -12,7 +13,7 @@ function getPlannerIds(){
       return response.data;
     })
     .catch(error => {
-      console.log("Error getting planner: ", error);
+      console.log("Error getting plannerIds: ", error);
     })
 }
 
@@ -49,7 +50,22 @@ function getPlannerItems(plannerId) {
       }
     })
     .catch(error => {
-      console.log("Error getting planner: ", error);
+      console.log("Error getting plannerItems: ", error);
     })
+
+}
+
+function getUsersInPlanner(plannerId) {
+    const config = {
+        params: {"plannerId": plannerId}
+    };
+
+    return requests.getInstance().get('/api/Planner/getUsersInPlanner', config)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log("Error getting users: ", error);
+        })
 
 }

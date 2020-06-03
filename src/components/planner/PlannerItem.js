@@ -31,10 +31,9 @@ export class PlannerItems extends Collection {
     return PlannerItems;
   }
 
-  //returns the appointments for day x
-  getAppointmentsForDay(id , owner) {
+  getAppointmentsForDay(day , user) {
     return this.filter((appointment) => {
-      return appointment.day === id && appointment.owner === owner;
+      return appointment.day === day && appointment.owner === user;
     })
   }
 
