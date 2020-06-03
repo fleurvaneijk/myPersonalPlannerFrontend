@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {AgendaItems} from "./AgendaItem";
+  import {AgendaItems} from "./../../models/AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
   import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
 
