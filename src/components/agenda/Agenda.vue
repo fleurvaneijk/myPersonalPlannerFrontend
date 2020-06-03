@@ -55,11 +55,9 @@
 </template>
 
 <script>
-  import AgendaItem, {AgendaItems} from "./AgendaItem";
+  import {AgendaItems} from "./AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
-  import {getDaysOfWeek, getWeekNumber, isToday} from "../../store/actions";
-  import {requests} from "../../api/requests";
-  const ical = require('ical');
+  import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
 
   let agendaItems;
   agendaItems = null;
