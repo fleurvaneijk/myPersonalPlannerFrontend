@@ -153,20 +153,10 @@
           appointment.setOverlapping(overlapping);
         }
       },
-      loadICal() {
-        requests.getInstance().get("/api/agenda/").then(response => {
-          let items = response.data;
-          let cal = ical.parseICS(items);
-          for (let k in cal) {
-            var ev = cal[k];
-            if (cal[k].type === 'VEVENT') {
-              let timeBegin = ev.start.getTime();
-              let timeEnd = ev.end.getTime();
-              let newItem = new AgendaItem({id: ev.uid, timestampBegin: timeBegin, timestampEnd: timeEnd, title: ev.summary, description: ev.location });
-              agendaItems.add(newItem);
-              this.loadNewDates();
-            }
-          }
+      loadICal(){
+        agendaItems = loadICal((newAgendaItems) => {
+          agendaItems = newAgendaItems;
+          this.loadNewDates();
         });
       },
     }
