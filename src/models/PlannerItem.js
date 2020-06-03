@@ -31,5 +31,11 @@ export class PlannerItems extends Collection {
     return PlannerItem;
   }
 
+  getAppointmentsForDay(day , user) {
+    return this.filter((appointment) => {
+      return appointment.day === day && appointment.owner === user;
+    })
+  }
+
 }
 

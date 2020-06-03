@@ -29,20 +29,18 @@
 <script>
   import { plannerService } from "../../services/planner.service"
   import {days} from "../../store/store";
-  // import {PlannerItems} from "../../models/PlannerItem";
 
   export default ({
     props: ['planner'],
     data () {
       return {
         daysInWeek: days,
-        plannerItems: null,
         users: null,
       }
     },
     async created() {
-      this.plannerItems = this.planner.plannerItems;
       this.users = await this.getUsers();
+      console.log(this.users[0]);
     },
     methods: {
       async getUsers() {
@@ -52,7 +50,7 @@
 
       getAppointments(day, user) {
         console.log("get appointments: " , this.plannerItems);
-        let items = this.plannerItems.getAppointmentsForDay(day, user);
+        let items = this.planner.plannerItems.getAppointmentsForDay(day, user);
         return items.models;
       },
 
