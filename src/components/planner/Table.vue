@@ -28,7 +28,7 @@
 
 <script>
   import PlannerItem , {PlannerItems} from "./PlannerItem";
-  import User, {Users} from "./User";
+  import User, {Users} from "../../models/User";
   import {days} from "../../store/store";
 
   let plannerItems;
@@ -46,25 +46,25 @@
     },
     created() {
       plannerItems = new PlannerItems();
-      let plannerItem1 = new PlannerItem({id: 1, day: 0, owner: "Fleur", title: "monday", description: "Test" });
-      let plannerItem2 = new PlannerItem({id: 2, day: 1, owner: "Stefan", title: "tuesday", description: "Test" });
-      let plannerItem3 = new PlannerItem({id: 3, day: 2, owner: "Simon", title: "wednesday 1", description: "Test" });
-      let plannerItem4 = new PlannerItem({id: 4, day: 2, owner: "Simon", title: "wednesday 2", description: "Test" });
-      let plannerItem5 = new PlannerItem({id: 5, day: 2, owner: "Stefan", title: "wednesday 3", description: "Test" });
-      let plannerItem6 = new PlannerItem({id: 6, day: 3, owner: "Simon", title: "thursday", description: "Test" });
-      let plannerItem7 = new PlannerItem({id: 7, day: 4, owner: "Fleur", title: "friday", description: "Test" });
-      let plannerItem8 = new PlannerItem({id: 8, day: 5, owner: "Stefan", title: "saturday", description: "Test" });
-      let plannerItem9 = new PlannerItem({id: 9, day: 6, owner: "Fleur", title: "sunday", description: "Test" });
+      let plannerItem1 = new PlannerItem({id: 1, plannerId: 1, user: "Fleur", day: 0, title: "monday", description: "Test" });
+      let plannerItem2 = new PlannerItem({id: 2, plannerId: 1, user: "Stefan", day: 1, title: "tuesday", description: "Test" });
+      let plannerItem3 = new PlannerItem({id: 3, plannerId: 1, user: "Simon", day: 2,title: "wednesday 1", description: "Test" });
+      // let plannerItem4 = new PlannerItem({id: 4, day: 2, user: "Simon", title: "wednesday 2", description: "Test" });
+      // let plannerItem5 = new PlannerItem({id: 5, day: 2, user: "Stefan", title: "wednesday 3", description: "Test" });
+      // let plannerItem6 = new PlannerItem({id: 6, day: 3, user: "Simon", title: "thursday", description: "Test" });
+      // let plannerItem7 = new PlannerItem({id: 7, day: 4, user: "Fleur", title: "friday", description: "Test" });
+      // let plannerItem8 = new PlannerItem({id: 8, day: 5, user: "Stefan", title: "saturday", description: "Test" });
+      // let plannerItem9 = new PlannerItem({id: 9, day: 6, user: "Fleur", title: "sunday", description: "Test" });
 
       plannerItems.add(plannerItem1);
       plannerItems.add(plannerItem2);
       plannerItems.add(plannerItem3);
-      plannerItems.add(plannerItem4);
-      plannerItems.add(plannerItem5);
-      plannerItems.add(plannerItem6);
-      plannerItems.add(plannerItem7);
-      plannerItems.add(plannerItem8);
-      plannerItems.add(plannerItem9);
+      // plannerItems.add(plannerItem4);
+      // plannerItems.add(plannerItem5);
+      // plannerItems.add(plannerItem6);
+      // plannerItems.add(plannerItem7);
+      // plannerItems.add(plannerItem8);
+      // plannerItems.add(plannerItem9);
 
       users = new Users();
       let user1 = new User({id: 1, username: "Fleur"});
@@ -80,7 +80,7 @@
         try{
           let users = users.getUsers();
         } catch (err){
-          console.log(err); //TODO: cannot read property 'getUsers'of undefined ?? maar hij doet het wel
+          //TODO: cannot read property 'getUsers'of undefined ?? maar hij doet het wel
         }
         return users.models;
       },

@@ -5,8 +5,9 @@ export default class PlannerItem extends Model {
   defaults () {
     return {
       id: null,
+      plannerId: null,
+      user: null,
       day: null,
-      owner: null,
       title: null,
       description: null,
     }
@@ -15,6 +16,8 @@ export default class PlannerItem extends Model {
   mutations() {
     return {
       id: (id) => Number(id) || null,
+      plannerId: (plannerId) => Number(plannerId) || null,
+      user: String,
       day: (day) => Number(day),
       title: String,
       description: String,
