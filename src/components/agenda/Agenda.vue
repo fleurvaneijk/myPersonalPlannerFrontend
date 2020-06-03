@@ -59,13 +59,12 @@
   import {days, monthsLong, monthsShort} from "./../../store/store";
   import {getDaysOfWeek, getWeekNumber, isToday} from "../../store/actions";
   import {requests} from "../../api/requests";
-  import {userService} from "../../services/user.service";
   const ical = require('ical');
 
   let agendaItems;
   agendaItems = null;
 
-  export default {
+  export default ({
     data:() =>{
       return {
         week: [],
@@ -77,7 +76,6 @@
         monthsShort: monthsShort,
         appointmentsInWeek: [],
         fractionOfHour: 2,
-        agendaLink: userService.getAgendaLink()
       }
     },
     created() {
@@ -171,11 +169,8 @@
           }
         });
       },
-      changeAgenda() {
-        userService.changeAgendaLink(this.agendaLink);
-      }
     }
-  }
+  });
 </script>
 
 <style scoped lang="scss">
