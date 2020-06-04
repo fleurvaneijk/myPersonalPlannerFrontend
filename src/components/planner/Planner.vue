@@ -2,20 +2,20 @@
   <div class="background">
     <div class="wrapper nav-component">
       <h1>Planner</h1>
-      <h3 v-if="!plannerExists">You don't have any planners yet!</h3> <!--TODO: misschien veranderen naar enkelvoud-->
+      <h3 v-if="isNullOrEmpty(planners)">You don't have any planners yet!</h3> <!--TODO: misschien veranderen naar enkelvoud-->
 
-      <div id="start" v-if="!plannerExists">
+      <div id="start" v-if="isNullOrEmpty(planners)">
         <img class="start-planner" @click="createNewPlanner" src="../../assets/create.png" alt="Create new planner">
         <p>Create new planner</p>
       </div>
 
-      <div id="planner" v-if="plannerExists">
+      <div id="planner" v-if="!isNullOrEmpty(planners)">
         <div class="grid-container">
-          <ul class="grid-item" v-for="user in users" v-bind:key="user.username">
-            <li>
-              <p>{{user.username}}</p>
-            </li>
-          </ul>
+<!--          <ul class="grid-item" v-for="user in users" v-bind:key="user.username">-->
+<!--            <li>-->
+<!--              <p>{{user.username}}</p>-->
+<!--            </li>-->
+<!--          </ul>-->
 
           <ul class="grid-item">
             <li>
@@ -33,7 +33,10 @@
           </ul>
         </div>
 
-        <plannertable id="table" ></plannertable>
+        <div v-for="planner in planners.models" v-bind:key="planner.id">
+          <h2>{{planner.title}}</h2>
+          <planner-table  :planner="planner" id="table" ></planner-table>
+        </div>
       </div>
 
     </div>
@@ -41,34 +44,52 @@
 </template>
 
 <script>
-  import plannertable  from './Table.vue'
-  import User, {Users} from "./User";
+  import Table  from './Table.vue'
+  import { plannerService } from "../../services/planner.service"
+  import Planner, {Planners} from "../../models/Planner";
+  import { PlannerItems } from "../../models/PlannerItem";
+  import {isNullOrEmpty} from '../../store/actions';
 
   export default {
     name: 'Planner',
     components: {
-      plannertable
+      "planner-table" : Table
     },
     data() {
       return{
-        plannerExists: false,
+        planners: null
       }
     },
-    created() {
-      //TODO: checken of er al een planner is
+    async created() {
+      this.planners = await this.getPlanners();
 
-      let users = new Users();
-      let user1 = new User({id: 1, username: "Fleur"});
-      let user2 = new User({id: 2, username: "Simon"});
-      let user3 = new User({id: 3, username: "Stefan"});
-      users.add(user1);
-      users.add(user2);
-      users.add(user3);
     },
     methods: {
+      isNullOrEmpty(x){
+        return isNullOrEmpty(x)
+      },
+
+      async getPlanners() {
+        let plannerIds = await plannerService.getPlannerIds();
+        let planners = new Planners();
+
+        for (const id of plannerIds) {
+          let planner = await plannerService.getPlanner(id);
+          let items = await plannerService.getPlannerItems(id)
+
+          let itemsModel = new PlannerItems();
+          items.forEach(item => {
+            itemsModel.add(item);
+          })
+
+          let plannerModel = new Planner({id: planner.id, title: planner.title, plannerItems: itemsModel});
+          planners.add(plannerModel)
+        }
+        return planners;
+      },
+
       createNewPlanner() {
         console.log("create new planner");
-        this.plannerExists = true;
       },
 
       joinPlanner() {
@@ -77,7 +98,6 @@
 
       addTask() {
         console.log("add task");
-        this.plannerExists = true;
       },
 
       addUser() {

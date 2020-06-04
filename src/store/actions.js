@@ -1,6 +1,6 @@
 import {now} from "./store";
 import {requests} from "../api/requests";
-import AgendaItem, {AgendaItems} from "../components/agenda/AgendaItem";
+import AgendaItem, {AgendaItems} from "../models/AgendaItem";
 const ical = require('ical');
 
 export const getWeekNumber = (date) =>
@@ -60,6 +60,11 @@ export const loadICal = (update) => {
     }
     update(agendaItems);
   });
+}
+
+export const isNullOrEmpty = (x) =>
+{
+  return (x === null || x === "" || x === undefined);
 }
 
 

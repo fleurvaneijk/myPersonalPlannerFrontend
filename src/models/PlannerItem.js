@@ -1,23 +1,26 @@
-import {Model, Collection} from "vue-mc";
+import {Collection, Model} from "vue-mc";
 
 export default class PlannerItem extends Model {
 
   defaults () {
     return {
       id: null,
+      user: null,
       day: null,
-      owner: null,
       title: null,
       description: null,
+      isDone: false,
     }
   }
 
   mutations() {
     return {
       id: (id) => Number(id) || null,
-      day: (day) => Number(day),
+      user: Number,
+      day: Number,
       title: String,
       description: String,
+      isDone: Boolean,
     }
   }
 }
@@ -25,13 +28,18 @@ export default class PlannerItem extends Model {
 export class PlannerItems extends Collection {
 
   model() {
-    return PlannerItems;
+    return PlannerItem;
   }
 
-  //returns the appointments for day x
-  getAppointmentsForDay(id , owner) {
+  getAppointmentsForDayAndUser(day , user) {
     return this.filter((appointment) => {
-      return appointment.day === id && appointment.owner === owner;
+      return appointment.day == day && appointment.user == user.id;
+    })
+  }
+
+  getAppointmentsForDay(day) {
+    return this.filter((appointment) => {
+      return appointment.day === day;
     })
   }
 

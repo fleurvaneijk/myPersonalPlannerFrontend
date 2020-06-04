@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {AgendaItems} from "./AgendaItem";
+  import {AgendaItems} from "./../../models/AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
   import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
   import {userService} from "../../services/user.service";
@@ -63,7 +63,7 @@
   let agendaItems;
   agendaItems = null;
 
-  export default {
+  export default ({
     data:() =>{
       return {
         week: [],
@@ -137,6 +137,7 @@
         dateEnd.setMinutes(59);
         dateEnd.setSeconds(59);
         dateEnd.setMilliseconds(0)
+
         return agendaItems.getAppointmentsBetweenDates(dateBegin.getTime(), dateEnd.getTime())
       },
       findOverlappingAppointments(day) {
@@ -159,10 +160,12 @@
         });
       },
       changeAgenda() {
-        userService.changeAgendaLink(this.agendaLink);
+        userService.changeAgendaLink(this.agendaLink).then(() => {
+          this.loadICal();
+        })
       }
     }
-  }
+  });
 </script>
 
 <style scoped lang="scss">
