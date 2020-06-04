@@ -160,7 +160,9 @@
         });
       },
       changeAgenda() {
-        userService.changeAgendaLink(this.agendaLink);
+        userService.changeAgendaLink(this.agendaLink).then(() => {
+          this.loadICal();
+        })
       }
     }
   });
