@@ -11,13 +11,13 @@
     </thead>
 
     <tbody>
-      <tr v-for="user in getUsers()" v-bind:key="user.username">
+      <tr v-for="user in this.users" v-bind:key="user.id">
         <td id="username">{{ user.username }}</td>
         <td id="cell" v-for="day in daysInWeek" v-bind:key="day.id">
-          <template v-for="appoinment in getAppointments(day.id, user.username)">
-            <div class="item" v-bind:key="appoinment.get('id')">
-              <p id="title">{{ appoinment.get("title") }} </p>
-              <p id="description">{{ appoinment.get("description") }}</p>
+          <template v-for="appoinment in getAppointments(day.id, user)">
+            <div class="item" v-bind:key="appoinment.id">
+              <p id="title">{{ appoinment.title }} </p>
+              <p id="description">{{ appoinment.description }}</p>
             </div>
           </template>
         </td>
@@ -27,68 +27,44 @@
 </template>
 
 <script>
-  import PlannerItem , {PlannerItems} from "./PlannerItem";
-  import User, {Users} from "../../models/User";
+  import { plannerService } from "../../services/planner.service"
   import {days} from "../../store/store";
 
-  let plannerItems;
-  plannerItems = null;
-
-  let users;
-  users = null;
-
   export default ({
-    data:() =>{
+    props: ['planner'],
+    data () {
       return {
         daysInWeek: days,
-
+        users: null,
+        itemsForUser: {}
       }
     },
     created() {
-      plannerItems = new PlannerItems();
-      let plannerItem1 = new PlannerItem({id: 1, plannerId: 1, user: "Fleur", day: 0, title: "monday", description: "Test" });
-      let plannerItem2 = new PlannerItem({id: 2, plannerId: 1, user: "Stefan", day: 1, title: "tuesday", description: "Test" });
-      let plannerItem3 = new PlannerItem({id: 3, plannerId: 1, user: "Simon", day: 2,title: "wednesday 1", description: "Test" });
-      // let plannerItem4 = new PlannerItem({id: 4, day: 2, user: "Simon", title: "wednesday 2", description: "Test" });
-      // let plannerItem5 = new PlannerItem({id: 5, day: 2, user: "Stefan", title: "wednesday 3", description: "Test" });
-      // let plannerItem6 = new PlannerItem({id: 6, day: 3, user: "Simon", title: "thursday", description: "Test" });
-      // let plannerItem7 = new PlannerItem({id: 7, day: 4, user: "Fleur", title: "friday", description: "Test" });
-      // let plannerItem8 = new PlannerItem({id: 8, day: 5, user: "Stefan", title: "saturday", description: "Test" });
-      // let plannerItem9 = new PlannerItem({id: 9, day: 6, user: "Fleur", title: "sunday", description: "Test" });
-
-      plannerItems.add(plannerItem1);
-      plannerItems.add(plannerItem2);
-      plannerItems.add(plannerItem3);
-      // plannerItems.add(plannerItem4);
-      // plannerItems.add(plannerItem5);
-      // plannerItems.add(plannerItem6);
-      // plannerItems.add(plannerItem7);
-      // plannerItems.add(plannerItem8);
-      // plannerItems.add(plannerItem9);
-
-      users = new Users();
-      let user1 = new User({id: 1, username: "Fleur"});
-      let user2 = new User({id: 2, username: "Simon"});
-      let user3 = new User({id: 3, username: "Stefan"});
-
-      users.add(user1);
-      users.add(user2);
-      users.add(user3);
+      this.users = this.getUsers();
     },
     methods: {
       getUsers() {
-        try{
-          let users = users.getUsers();
-        } catch (err){
-          //TODO: cannot read property 'getUsers'of undefined ?? maar hij doet het wel
-        }
-        return users.models;
-      },
-      getAppointments(day, user) {
-        let items = plannerItems.getAppointmentsForDay(day, user);
-        return items.models;
+        plannerService.getUsersInPlanner(this.planner.id).then((users)=>{
+          this.getItemsForUsers(users);
+          this.users = users;
+        });
       },
 
+      getAppointments(day, user) {
+        let items = this.itemsForUser[user.id][day];
+        return items.models;
+      },
+      getItemsForUsers(users) {
+        for (const userIndex in users) {
+          const user = users[userIndex];
+          let itemsInDay = {}
+          for (let dayIndex in this.daysInWeek) {
+            let plannerItems = this.planner.plannerItems.getAppointmentsForDayAndUser(dayIndex, user);
+            itemsInDay[dayIndex] = plannerItems;
+          }
+          this.itemsForUser[user.id] = itemsInDay;
+        }
+      }
     }
   });
 </script>

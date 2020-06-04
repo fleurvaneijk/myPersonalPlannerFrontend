@@ -58,6 +58,7 @@
   import {AgendaItems} from "./../../models/AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
   import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
+  import {userService} from "../../services/user.service";
 
   let agendaItems;
   agendaItems = null;
@@ -74,6 +75,7 @@
         monthsShort: monthsShort,
         appointmentsInWeek: [],
         fractionOfHour: 2,
+        agendaLink: userService.getAgendaLink()
       }
     },
     created() {
@@ -157,6 +159,11 @@
           this.loadNewDates();
         });
       },
+      changeAgenda() {
+        userService.changeAgendaLink(this.agendaLink).then(() => {
+          this.loadICal();
+        })
+      }
     }
   });
 </script>

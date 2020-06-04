@@ -64,7 +64,7 @@ export const loadICal = (update) => {
 
 export const isNullOrEmpty = (x) =>
 {
-  return (x === null || x.isEmpty() || x === "" || x === undefined);
+  return (x === null || x === "" || x === undefined);
 }
 
 
