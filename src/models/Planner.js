@@ -13,7 +13,7 @@ export default class Planner extends Model {
   mutations() {
     return {
       id: (id) => Number(id) || null,
-      title: String
+      title: String,
     }
   }
 }
