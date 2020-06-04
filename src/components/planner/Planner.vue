@@ -2,7 +2,7 @@
   <div class="background">
     <div class="wrapper nav-component">
       <h1>Planner</h1>
-      <h3 v-if="isNullOrEmpty(planners)">You don't have any planners yet!</h3> <!--TODO: misschien veranderen naar enkelvoud-->
+      <h3 v-if="isNullOrEmpty(planners)">You don't have any planners yet!</h3>
 
       <div id="start" v-if="isNullOrEmpty(planners)">
         <img class="start-planner" @click="createNewPlanner" src="../../assets/create.png" alt="Create new planner">
@@ -11,11 +11,7 @@
 
       <div id="planner" v-if="!isNullOrEmpty(planners)">
         <div class="grid-container">
-<!--          <ul class="grid-item" v-for="user in users" v-bind:key="user.username">-->
-<!--            <li>-->
-<!--              <p>{{user.username}}</p>-->
-<!--            </li>-->
-<!--          </ul>-->
+
 
           <ul class="grid-item">
             <li>
@@ -46,9 +42,8 @@
 <script>
   import Table  from './Table.vue'
   import { plannerService } from "../../services/planner.service"
-  import Planner, {Planners} from "../../models/Planner";
-  import { PlannerItems } from "../../models/PlannerItem";
-  import {isNullOrEmpty} from '../../store/actions';
+  import {Planners} from "../../models/Planner";
+  import {isNullOrEmpty} from "../../store/actions";
 
   export default {
     name: 'Planner',
@@ -62,29 +57,12 @@
     },
     async created() {
       this.planners = await this.getPlanners();
-
     },
     methods: {
-      isNullOrEmpty(x){
-        return isNullOrEmpty(x)
-      },
 
       async getPlanners() {
-        let plannerIds = await plannerService.getPlannerIds();
         let planners = new Planners();
-
-        for (const id of plannerIds) {
-          let planner = await plannerService.getPlanner(id);
-          let items = await plannerService.getPlannerItems(id)
-
-          let itemsModel = new PlannerItems();
-          items.forEach(item => {
-            itemsModel.add(item);
-          })
-
-          let plannerModel = new Planner({id: planner.id, title: planner.title, plannerItems: itemsModel});
-          planners.add(plannerModel)
-        }
+        planners.add(await plannerService.getPlanners());
         return planners;
       },
 
@@ -102,6 +80,10 @@
 
       addUser() {
         console.log("add / invite user");
+      },
+
+      isNullOrEmpty(x) {
+        return isNullOrEmpty(x);
       }
     }
   }

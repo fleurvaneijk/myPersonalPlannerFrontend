@@ -38,7 +38,7 @@ export const getDaysOfWeek = (date) => {
   return week;
 }
 
-export const loadICal = (update) => {
+export const loadICal = (update) => { //TODO: split up
   let agendaItems = new AgendaItems();
   requests.getInstance().get("/api/agenda/").then(response => {
     let items = response.data;
@@ -64,7 +64,14 @@ export const loadICal = (update) => {
 
 export const isNullOrEmpty = (x) =>
 {
-  return (x === null || x === "" || x === undefined);
+  if(x === null || x === "" || x === undefined) {
+    return true;
+  } else if (x.isEmpty()){
+    return true;
+  } else {
+    return false;
+  }
+  // return (x === null || x === "" || x === undefined || x.isEmpty());
 }
 
 

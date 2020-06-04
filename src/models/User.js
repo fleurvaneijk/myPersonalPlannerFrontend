@@ -20,7 +20,7 @@ export default class User extends Model {
 export class Users extends Collection {
 
   model() {
-    return Users;
+    return User;
   }
 
   getUsers() {
