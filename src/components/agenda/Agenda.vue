@@ -1,17 +1,11 @@
 <template>
-  <div class="nav-component">
-    <h1>Agenda</h1>
-    <form v-on:submit.prevent="changeAgenda">
-      <label for="agendaLink">
-        <input type="text" placeholder="agendaLink" id="agendaLink" v-model="agendaLink" required>
-      </label>
-      <br>
-      <button type="submit">Change Agenda</button>
-    </form>
-    <table>
-      <thead>
-      <tr>
-        <th>
+  <div class="background">
+    <div class="wrapper nav-component">
+      <h1>Agenda</h1>
+      <table>
+        <thead>
+        <tr>
+          <th>
           <span>
             <button type="button" class="btn btn-link" v-on:click="previousWeek()">
               <svg class="bi bi-arrow-left-short" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -27,38 +21,41 @@
               </svg>
             </button>
           </span>
-        </th>
-        <th v-for="day in daysInWeek" v-bind:key="day.id">
-          <span class="day" v-bind:class="{active: isToday(week[day.id])}">{{ week[day.id].getDate() }}</span>
-          <span class="long">{{ monthsLong[week[day.id].getMonth()] }}</span>
-          <span class="short">{{ monthsShort[week[day.id].getMonth()] }}</span>
-          <span class="long">{{ day.long }}</span>
-          <span class="short">{{ day.short }}</span>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="index in 24 * fractionOfHour" v-bind:key="index">
-        <td class="hour" v-bind:rowspan="fractionOfHour" v-if="index % fractionOfHour == 1">{{ Math.floor(index / fractionOfHour) }}:00</td>
-        <td v-for="day in daysInWeek" v-bind:key="day.id">
-          <template v-for="appoinment in getAppointments(day.id, index)">
-            <div class="item" v-bind:class="{overlapping: appoinment.get('overlapping').length > 0}" v-bind:key="appoinment.get('id')">
-              <p>{{ appoinment.get("title") }}</p>
-              <p> {{ appoinment.get("description") }}</p>
-            </div>
-          </template>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+          </th>
+          <th v-for="day in daysInWeek" v-bind:key="day.id">
+            <span class="day" v-bind:class="{active: isToday(week[day.id])}">{{ week[day.id].getDate() }}</span>
+            <span class="long">{{ monthsLong[week[day.id].getMonth()] }}</span>
+            <span class="short">{{ monthsShort[week[day.id].getMonth()] }}</span>
+            <span class="long">{{ day.long }}</span>
+            <span class="short">{{ day.short }}</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="index in 24 * fractionsOfHour" v-bind:key="index">
+          <td class="hour" v-bind:rowspan="fractionsOfHour" v-if="index % fractionsOfHour == 1 || fractionsOfHour == 1">
+            {{ Math.floor(index / fractionsOfHour) }}:00</td>
+          <td v-for="day in daysInWeek" v-bind:key="day.id">
+            <template v-for="appointment in getAppointments(day.id, index)">
+              <div class="item" v-bind:class="{overlapping: appointment.get('overlapping').length > 0}" v-bind:key="appointment.get('id')">
+                <p>{{ appointment.get("title") }}</p>
+                <p> {{ appointment.get("description") }}</p>
+                <p> {{ appointment.get("location") }}</p>
+              </div>
+            </template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
   import {AgendaItems} from "./../../models/AgendaItem";
   import {days, monthsLong, monthsShort} from "./../../store/store";
-  import {getDaysOfWeek, getWeekNumber, isToday, loadICal} from "../../store/actions";
-  import {userService} from "../../services/user.service";
+  import {getDaysOfWeek, getWeekNumber, isToday} from "../../store/actions";
+  import {agendaService} from "../../services/agenda.service";
 
   let agendaItems;
   agendaItems = null;
@@ -74,30 +71,32 @@
         monthsLong: monthsLong,
         monthsShort: monthsShort,
         appointmentsInWeek: [],
-        fractionOfHour: 2,
-        agendaLink: userService.getAgendaLink()
+        fractionsOfHour: 1
       }
     },
     created() {
       agendaItems = new AgendaItems();
       this.now = new Date();
-      this.loadNewDates();
+      this.loadNewWeek();
       this.loadICal();
     },
     methods: {
       previousWeek() {
         this.weekoffset--;
-        this.loadNewDates();
+        this.loadNewWeek();
       },
       nextWeek() {
         this.weekoffset++;
-        this.loadNewDates();
+        this.loadNewWeek();
       },
-      loadNewDates() {
+      loadNewWeek() {
         let newDate = new Date();
         newDate.setDate(this.now.getDate() + (this.weekoffset * 7))
         this.week = this.getDaysOfWeek(newDate);
         this.weeknumber = this.getWeekNumber(newDate);
+        this.loadNewAppointsForWeek();
+      },
+      loadNewAppointsForWeek() {
         for (let day in this.week) {
           this.appointmentsInWeek[day] = this.getAppointmentsForDay(day);
           this.findOverlappingAppointments(day);
@@ -114,15 +113,16 @@
       },
       getTimeStamp(dayId, index) {
         let date = this.week[dayId];
-        date.setHours((index - 1)/this.fractionOfHour);
-        date.setMinutes(((60 / this.fractionOfHour) * ((index - 1) % this.fractionOfHour)));
+        date.setHours((index - 1)/this.fractionsOfHour);
+        date.setMinutes(((60 / this.fractionsOfHour) * ((index - 1) % this.fractionsOfHour)));
         date.setSeconds(0);
         date.setMilliseconds(0);
         return date;
       },
       getAppointments(id, index) {
-        let timestamp = this.getTimeStamp(id, index);
-        let items = this.appointmentsInWeek[id].getAppointmentsBetweenDates(timestamp, timestamp);
+        let timestampBegin = this.getTimeStamp(id, index);
+        let timestampEnd = this.getTimeStamp(id, index + 1);
+        let items = this.appointmentsInWeek[id].getAppointmentsBetweenDates(timestampBegin, timestampEnd);
         return items.models;
       },
       getAppointmentsForDay(day) {
@@ -154,15 +154,15 @@
         }
       },
       loadICal(){
-        agendaItems = loadICal((newAgendaItems) => {
+        agendaItems = agendaService.loadICal((newAgendaItems) => {
           agendaItems = newAgendaItems;
-          this.loadNewDates();
+          this.loadNewWeek();
         });
       },
-      changeAgenda() {
-        userService.changeAgendaLink(this.agendaLink).then(() => {
-          this.loadICal();
-        })
+      isFirst(day, index, appointment) {
+        let timestampBegin = this.getTimeStamp(day, index);
+        let timestampEnd = this.getTimeStamp(day, index + this.fractionsOfHour);
+        console.log(timestampBegin, timestampEnd, appointment)
       }
     }
   });
@@ -172,6 +172,22 @@
 
   @import "src/variables";
 
+  .background {
+    background-image: url("../../assets/background2.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    clear: both;
+    overflow: auto;
+  }
+
+  .wrapper {
+    background-color: rgba(255, 255, 255, 0.75);
+    margin: 0 10%;
+    padding: 10px 20px;
+    height: auto;
+  }
+
   table{
     width: 100%;
     table-layout: fixed;
@@ -180,7 +196,7 @@
       tr{
         th{
           position: sticky;
-          top: 50px;
+          top: -10px;
           background: $primary-blue;
           color: $secondary-blue;
           padding: 0.2em;
@@ -272,13 +288,14 @@
         }
         .item {
           display: inline-block;
+          font-size: 0.6em;
           border: 2px solid $primary-blue;
           background-color: $secondary-blue;
           color: $background-grey;
           padding: 3px 8px;
           width: 100%;
           border-radius: 5px;
-
+          height: 105%;
           &.overlapping {
             color: $tertiary-orange;
           }
