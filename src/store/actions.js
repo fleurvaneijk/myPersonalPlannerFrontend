@@ -1,7 +1,4 @@
 import {now} from "./store";
-import {requests} from "../api/requests";
-import AgendaItem, {AgendaItems} from "../models/AgendaItem";
-const ical = require('ical');
 
 export const getWeekNumber = (date) =>
 {
@@ -26,7 +23,7 @@ export const isToday = (date) => {
 }
 
 export const getDaysOfWeek = (date) => {
-  var week= [];
+  var week = [];
   var current = date;
   current.setDate((current.getDate() - current.getDay() + 1));
   for (var i = 0; i < 7; i++) {
@@ -36,30 +33,6 @@ export const getDaysOfWeek = (date) => {
     current.setDate(current.getDate() +1);
   }
   return week;
-}
-
-export const loadICal = (update) => { //TODO: split up
-  let agendaItems = new AgendaItems();
-  requests.getInstance().get("/api/agenda/").then(response => {
-    let items = response.data;
-    let cal = ical.parseICS(items);
-    for (let item in cal) {
-      var event = cal[item];
-      if (cal[item].type === 'VEVENT') {
-        let timeBegin = event.start.getTime();
-        let timeEnd = event.end.getTime();
-        let newItem = new AgendaItem({
-          id: event.uid,
-          timestampBegin: timeBegin,
-          timestampEnd: timeEnd,
-          title: event.summary,
-          description: event.location
-        });
-        agendaItems.add(newItem);
-      }
-    }
-    update(agendaItems);
-  });
 }
 
 export const isNullOrEmpty = (x) =>
@@ -73,5 +46,4 @@ export const isNullOrEmpty = (x) =>
   }
   // return (x === null || x === "" || x === undefined || x.isEmpty());
 }
-
 
