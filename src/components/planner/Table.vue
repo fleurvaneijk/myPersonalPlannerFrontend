@@ -11,23 +11,29 @@
     </thead>
 
     <tbody>
-      <tr v-for="user in this.users" v-bind:key="user.id">
+      <tr v-for="user in planner.users.models" v-bind:key="user.id">
+
         <td id="username">{{ user.username }}</td>
+
         <td id="cell" v-for="day in daysInWeek" v-bind:key="day.id">
-          <template v-for="appoinment in getAppointments(day.id, user)">
-            <div class="item" v-bind:key="appoinment.id">
-              <p id="title">{{ appoinment.title }} </p>
-              <p id="description">{{ appoinment.description }}</p>
+
+          <template v-for="item in getItems(day, user)">
+
+            <div class="item" v-bind:key="item.id">
+              <p id="title">{{ item.title }} </p>
+              <p id="description">{{ item.description }}</p>
             </div>
+
           </template>
+
         </td>
+
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-  import { plannerService } from "../../services/planner.service"
   import {days} from "../../store/store";
 
   export default ({
@@ -40,30 +46,26 @@
       }
     },
     created() {
-      this.users = this.getUsers();
+      this.getItemsForUsers(this.planner.users.models);
+
     },
     methods: {
-      getUsers() {
-        plannerService.getUsersInPlanner(this.planner.id).then((users)=>{
-          this.getItemsForUsers(users);
-          this.users = users;
-        });
-      },
 
-      getAppointments(day, user) {
-        let items = this.itemsForUser[user.id][day];
+      getItems(day, user) {
+        let items = this.itemsForUser[user.id][day.id];
         return items.models;
       },
+
       getItemsForUsers(users) {
-        for (const userIndex in users) {
-          const user = users[userIndex];
+        users.forEach( user  => {
           let itemsInDay = {}
-          for (let dayIndex in this.daysInWeek) {
-            let plannerItems = this.planner.plannerItems.getAppointmentsForDayAndUser(dayIndex, user);
-            itemsInDay[dayIndex] = plannerItems;
-          }
+
+          this.daysInWeek.forEach(day => {
+            itemsInDay[day.id] = this.planner.plannerItems.getItemsByDayAndUser(day.id, user);
+          });
+
           this.itemsForUser[user.id] = itemsInDay;
-        }
+        })
       }
     }
   });
