@@ -3,20 +3,22 @@ import AgendaItem, {AgendaItems} from "../models/AgendaItem";
 const ical = require('ical');
 
 export const agendaService = {
-  loadICal
+  loadICal,
+  convertIcalItemsToAgendaItems,
+  getAgendaFromResponse
 }
 
 function loadICal (update) {
   requests.getInstance().get("/api/agenda/").then(response => {
 
-    let cal = getAgendaFromResponse(response);
+    let cal = getAgendaFromResponse(response.data);
     let agendaItems = convertIcalItemsToAgendaItems(cal)
     update(agendaItems);
   });
 }
 
 function getAgendaFromResponse(response) {
-  let items = response.data;
+  let items = response;
   return ical.parseICS(items);
 }
 

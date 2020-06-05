@@ -9,7 +9,6 @@ export const userService = {
   changeUsername,
   changePassword,
   deleteAccount,
-  //getAll,
   getAgendaLink,
   changeAgendaLink
 };
@@ -21,7 +20,7 @@ function login(username, password) {
   }).then(response => {
       if (response.data) {
         response.data.authdata = window.btoa(username + ':' + password);
-        localStorage.setItem('user', JSON.stringify(response.data));
+        setUserInLocalStorage(response.data);
         requests.makeInstance();
       }
       return response;
@@ -35,7 +34,7 @@ function register(username, password) {
   }).then(response => {
     if (response.data) {
       response.data.authdata = window.btoa(username + ':' + password);
-      localStorage.setItem('user', JSON.stringify(response.data));
+      setUserInLocalStorage(response.data);
     }
     return response;
   });
@@ -80,18 +79,18 @@ function deleteAccount(username, password) {
 }
 
 function logout() {
-  localStorage.removeItem('user');
+  removeFromLocalStorage()
   requests.makeInstance();
   // location.reload(true)
 }
 
 function getUsername() {
-  let user = JSON.parse(localStorage.getItem('user'));
+  let user = getUserFromLocalstorage()
   return user.username;
 }
 
 function getAgendaLink() {
-  let user = JSON.parse(localStorage.getItem('user'));
+  let user = getUserFromLocalstorage()
   return user.agendaLink;
 }
 
@@ -100,32 +99,29 @@ function changeAgendaLink(agendaLink) {
   return requests.getInstance().post('/api/User/changeagenda', {
     AgendaLink: agendaLink
   }).then(()=>{
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = getUserFromLocalstorage()
     user.agendaLink = agendaLink;
-    localStorage.setItem("user", JSON.stringify(user));
+    setUserInLocalStorage(user);
   });
 }
 
-// function getAll() {
-//   const requestOptions = {
-//     method: 'GET',
-//     headers: authHeader()
-//   };
-//
-//   return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-// }
+function getUserFromLocalstorage(){
+  if (localStorage)
+    return JSON.parse(localStorage.getItem('user'));
+  return null;
+}
 
-// function handleResponse(response) {
-//   if (!response.ok) {
-//     if (response.status === 401) {
-//       // auto logout if 401 response returned from api
-//       logout();
-//       location.reload(true);
-//     }
-//   }
-// }
+function setUserInLocalStorage(user) {
+  if (localStorage)
+    localStorage.setItem("user", JSON.stringify(user));
+}
+
+function removeFromLocalStorage() {
+  if (localStorage)
+    localStorage.clear();
+}
 
 function isLoggedIn() {
-  let user = JSON.parse(localStorage.getItem('user'));
+  let user = getUserFromLocalstorage()
   return user != null;
 }
