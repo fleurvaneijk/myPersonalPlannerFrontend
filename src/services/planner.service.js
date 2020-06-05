@@ -1,7 +1,8 @@
 import {requests} from "../api/requests";
 
 export const plannerService = {
-  getPlanners
+  getPlanners,
+  addUser
 };
 
 function getPlanners() {
@@ -11,5 +12,23 @@ function getPlanners() {
     })
     .catch(error => {
       console.log("Error getting planners: ", error);
+    })
+}
+
+function addUser(plannerId, username) {
+  const data = {
+    "plannerId": plannerId,
+    "username": username
+  }
+
+  console.log("config", data);
+
+  return requests.getInstance().post('/api/Planner/addUserToPlanner', data)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error adding user: ", error.message());
     })
 }

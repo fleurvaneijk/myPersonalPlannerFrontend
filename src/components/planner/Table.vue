@@ -35,9 +35,18 @@
 
 <script>
   import {days} from "../../store/store";
+  import {isNullOrEmpty} from '../../store/actions';
 
   export default ({
     props: ['planner'],
+    watch: {
+      planner: function() {
+        this.users = null;
+        this.itemsForUser = {};
+        this.getItemsForUsers(this.planner.users.models);
+
+      }
+    },
     data () {
       return {
         daysInWeek: days,
@@ -50,6 +59,9 @@
 
     },
     methods: {
+      isNullOrEmpty(x){
+        return isNullOrEmpty(x);
+      },
 
       getItems(day, user) {
         let items = this.itemsForUser[user.id][day.id];

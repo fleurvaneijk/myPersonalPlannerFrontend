@@ -2,6 +2,17 @@
   <div class="background">
     <div class="wrapper nav-component">
       <h1>Planner</h1>
+
+      <form v-if="!isNullOrEmpty(planners)">
+        <label>
+          <select @change="changeCurrentPlanner(currentPlanner)" v-model="currentPlanner">
+            <option  v-for="planner in planners.models" v-bind:key="planner.id"
+                     :value="planner">{{planner.title}}
+            </option>
+          </select>
+        </label>
+      </form>
+
       <h3 v-if="isNullOrEmpty(planners)">You don't have any planners yet!</h3>
 
       <div id="start" v-if="isNullOrEmpty(planners)">
@@ -10,28 +21,28 @@
       </div>
 
       <div id="planner" v-if="!isNullOrEmpty(planners)">
-        <div class="grid-container">
+        <div>
+          <div class="grid-container">
+            <h2 class="grid-item">{{this.currentPlanner.title}}</h2>
+            <ul class="grid-item">
+              <li>
+                <button @click="openCloseItemModal()">
+                  <img class="planner-action" src="../../assets/create.png" alt="Join planner">
+                  <p>Add Task</p>
+                </button>
+                <add-item-modal :plannerId="this.currentPlanner.id" v-model="itemModalOpen"></add-item-modal>
+              </li>
+              <li> <!--TODO: only show if user is owner-->
+                <button @click="openCloseUserModal()">
+                  <img class="planner-action" src="../../assets/create.png" alt="Join planner">
+                  <p>Add User</p>
+                </button>
+                <add-user-modal :plannerId="this.currentPlanner.id" v-model="userModalOpen"></add-user-modal>
+              </li>
+            </ul>
+          </div>
 
-
-          <ul class="grid-item">
-            <li>
-              <button>
-                <img class="planner-action" @click="addTask" src="../../assets/create.png" alt="Join planner">
-                <p>Add Task</p>
-              </button>
-            </li>
-            <li>
-              <button>
-                <img class="planner-action" @click="addUser" src="../../assets/create.png" alt="Join planner">
-                <p>Add User</p>
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <div v-for="planner in planners.models" v-bind:key="planner.id">
-          <h2>{{planner.title}}</h2>
-          <planner-table  :planner="planner" id="table" ></planner-table>
+          <planner-table id="table" :planner="this.currentPlanner"></planner-table>
         </div>
       </div>
 
@@ -40,23 +51,31 @@
 </template>
 
 <script>
-  import Table  from './Table.vue'
-  import { plannerService } from "../../services/planner.service"
+  import Table  from './Table.vue';
+  import AddUserModal from "./AddUserModal";
+  import AddItemModal from "./AddItemModal";
+  import { plannerService } from "../../services/planner.service";
   import {Planners} from "../../models/Planner";
   import {isNullOrEmpty} from "../../store/actions";
 
   export default {
     name: 'Planner',
     components: {
-      "planner-table" : Table
+      "planner-table" : Table,
+      "add-user-modal" : AddUserModal,
+      "add-item-modal" : AddItemModal
     },
     data() {
       return{
-        planners: null
+        planners: null,
+        userModalOpen: false,
+        itemModalOpen: false,
+        currentPlanner: null,
       }
     },
     async created() {
       this.planners = await this.getPlanners();
+      this.currentPlanner = this.planners.models[0];
     },
     methods: {
 
@@ -66,20 +85,26 @@
         return planners;
       },
 
+      changeCurrentPlanner(planner){
+        this.currentPlanner = planner;
+      },
+
       createNewPlanner() {
         console.log("create new planner");
       },
 
-      joinPlanner() {
-        console.log("join planner");
+      openCloseItemModal() {
+        if (this.userModalOpen) {
+          this.userModalOpen = !this.userModalOpen
+        }
+        this.itemModalOpen = !this.itemModalOpen;
       },
 
-      addTask() {
-        console.log("add task");
-      },
-
-      addUser() {
-        console.log("add / invite user");
+      openCloseUserModal() {
+        if (this.itemModalOpen) {
+          this.itemModalOpen = !this.itemModalOpen
+        }
+        this.userModalOpen = !this.userModalOpen;
       },
 
       isNullOrEmpty(x) {
@@ -90,7 +115,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import "src/variables";
 
   .background {
     background-image: url("../../assets/background2.jpg");
@@ -129,21 +153,32 @@
     }
 
     #planner {
-      text-align: center;
+      .grid-container{
+        margin-left: 4%;
+      }
+
+      .grid-item {
+        display: inline-block;
+        vertical-align: bottom;
+      }
 
       ul {
         list-style: none;
+        text-align: right;
 
         button{
           padding: 0;
           width: 70px;
           height: 60px;
+          background-color: transparent;
+          border-color: transparent;
         }
 
         li {
-          margin: 0 3%;
+          margin: 0 10px;
           display: inline-block;
         }
+
 
         img.planner-action {
           zoom: 38%;
@@ -152,11 +187,12 @@
         p{
           padding: 0;
           margin: 0;
+          font-weight: bold;
         }
       }
 
       #table {
-        margin-top: 3%;
+        margin-top: 1%;
       }
     }
 
