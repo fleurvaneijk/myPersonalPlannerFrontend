@@ -2,8 +2,9 @@
   <div class="background">
     <div class="wrapper container nav-component">
       <div class="row">
-        <div class="col-md-6">
-          <h3>Settings</h3>
+        <div class="col-md-6 content">
+          <h1>Settings</h1>
+          <br>
           <ul>
             <li><router-link tag="button" class="btn btn-primary" :to="'/settings/change-agenda'">Change agenda</router-link></li>
             <li><router-link tag="button" class="btn btn-primary" :to="'/settings/username'">Change username</router-link></li>
@@ -12,6 +13,9 @@
           </ul>
         </div>
         <div class="col-md-6">
+          <br>
+          <br>
+          <br>
           <router-view></router-view>
         </div>
       </div>
@@ -27,26 +31,22 @@
   }
 </script>
 <style scoped>
-
   .background {
     background-image: url("../../assets/background2.jpg");
     background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    clear: both;
-    overflow: auto;
   }
 
   .wrapper {
     background-color: rgba(255, 255, 255, 0.75);
-    margin: 0 15%;
-    padding: 10px 20px;
-    height: max(auto, 100%);
+  }
+
+  .content {
+    padding-left: 5%;
   }
 
   button {
     width: 140px;
-    margin: 5px 0px;
+    margin: 5px 0;
   }
   h3 {
     justify-content: center;

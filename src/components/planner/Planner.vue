@@ -124,7 +124,6 @@
   .wrapper{
     background-color: rgba(255, 255, 255, 0.75);
     margin: 0 15%;
-    /*min-width: 1050px;*/
 
     h1 {
       padding-top: 30px;

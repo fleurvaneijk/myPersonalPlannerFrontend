@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h3>Change username</h3>
     <form v-on:submit.prevent="changeUsername">
     <label for="oldUsername">
