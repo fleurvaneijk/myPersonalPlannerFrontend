@@ -10,6 +10,7 @@ import NotFoundComponent from './components/404NotFound.vue'
 import ChangeUsername from './components/settings/ChangeUsername.vue';
 import ChangePassword from './components/settings/ChangePassword.vue';
 import DeleteAccount from "./components/settings/DeleteAccount";
+import ChangeAgenda from "./components/settings/ChangeAgenda";
 
 export const routes = [
   {
@@ -51,7 +52,8 @@ export const routes = [
     children: [
       { path: 'username', component: ChangeUsername },
       { path: 'password', component: ChangePassword },
-      { path: 'delete-account', component: DeleteAccount }
+      { path: 'delete-account', component: DeleteAccount },
+      { path: 'change-agenda', component: ChangeAgenda },
     ],
   },
 

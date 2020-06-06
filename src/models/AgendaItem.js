@@ -9,6 +9,7 @@ export default class AgendaItem extends Model {
       timestampEnd: null,
       title: null,
       description: null,
+      location: null,
       overlapping: []
     }
   }
@@ -20,6 +21,7 @@ export default class AgendaItem extends Model {
       timestampEnd: (timestampEnd) => Number(timestampEnd) || null,
       title: String,
       description: String,
+      location: String,
       overlapping: []
     }
   }
