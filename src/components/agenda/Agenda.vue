@@ -179,6 +179,7 @@
     background-repeat: no-repeat;
     clear: both;
     overflow: auto;
+    min-height: 100%;
   }
 
   .wrapper {
