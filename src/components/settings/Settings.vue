@@ -34,10 +34,16 @@
   .background {
     background-image: url("../../assets/background2.jpg");
     background-size: cover;
+    clear: both;
+    overflow: auto;
+    min-height: 100%;
   }
 
   .wrapper {
     background-color: rgba(255, 255, 255, 0.75);
+    clear: both;
+    overflow: auto;
+    min-height: 100%;
   }
 
   .content {

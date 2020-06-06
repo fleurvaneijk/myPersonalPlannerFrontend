@@ -81,7 +81,9 @@
 
       async getPlanners() {
         let planners = new Planners();
-        planners.add(await plannerService.getPlanners());
+        let plannersData = await plannerService.getPlanners();
+        if (plannersData)
+          planners.add(plannersData);
         return planners;
       },
 
