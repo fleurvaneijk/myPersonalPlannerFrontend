@@ -21,11 +21,11 @@
       <p>5. Copy the link now displayed to you.</p>
       <p>6. Paste the link in the input field.</p>
       <br>
-      <h4>Where To Find Link On Google Agenda: </h4> <!--TODO @stefan ff stappen hier opschrijven-->
-      <p>1. balbalbla</p>
-      <p>2. balbalbla</p>
-      <p>3. balbalbla</p>
-      <p>4. balbalbla</p>
+      <h4>Where To Find Link On Google Agenda: </h4>
+      <p>1. Go to your google agenda.</p>
+      <p>2. Load the setting menu with the gear at the top right.</p>
+      <p>3. Select the agenda you want to import at the left of the setting menu.</p>
+      <p>4. Copy the secret address in iCal-layout.</p>
     </div>
   </div>
 </template>
