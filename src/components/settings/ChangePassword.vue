@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h3>Change password</h3>
     <form v-on:submit.prevent="changePassword">
       <label for="username">

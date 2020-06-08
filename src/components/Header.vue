@@ -37,7 +37,7 @@
               data-toggle="dropdown"
               role="button"
               aria-haspopup="true"
-              aria-expanded="false">Hello Guest, <span class="caret"></span></a>
+              aria-expanded="false">Hello Guest<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <router-link to="/login" activeClass="active" tag="li"><a>Login</a></router-link>
               <router-link to="/signup" activeClass="active" tag="li"><a>Register</a></router-link>

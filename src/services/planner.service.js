@@ -1,71 +1,125 @@
 import {requests} from "../api/requests";
 
 export const plannerService = {
-  getPlannerIds,
-  getPlanner,
-  getPlannerItems,
-  getUsersInPlanner,
+  getPlanners,
+  createPlanner,
+  addUser,
+  addItem,
+  deletePlanner,
+  deletePlannerItem,
+  removeUserFromPlanner
 };
 
-function getPlannerIds(){
-  return requests.getInstance().get('/api/Planner/getPlannerIds')
+function getPlanners() {
+  return requests.getInstance().get('/api/Planner/getPlanners')
     .then(response => {
       return response.data;
     })
     .catch(error => {
-      console.log("Error getting plannerIds: ", error);
+      console.log("Error getting planners: ", error);
     })
 }
 
-function getPlanner(id) {
+function createPlanner(title) {
   const config = {
-    params: {"plannerId": id}
-  };
+    params: {
+      "title": title
+    }
+  }
 
-  return requests.getInstance().get('/api/Planner/getPlanner', config)
+  return requests.getInstance().post('/api/Planner/createPlanner', null, config)
     .then(response => {
-      if (response.data === "") {
-        return null;
-      } else {
-        return response.data;
-      }
+      console.log("reponse data: ", response.data);
+      location.reload();
     })
     .catch(error => {
-      console.log("Error getting planner: ", error);
+      console.log("Error creating planner: ", error);
     })
-
 }
 
-function getPlannerItems(plannerId) {
-  const config = {
-    params: {"plannerId": plannerId}
-  };
+function addUser(plannerId, username) {
+  const data = {
+    "plannerId": plannerId,
+    "username": username
+  }
 
-  return requests.getInstance().get('/api/Planner/getPlannerItems', config)
+  return requests.getInstance().post('/api/Planner/addUserToPlanner', data)
     .then(response => {
-      if (response.data === "") {
-        return null;
-      } else {
-        return response.data;
-      }
+      console.log("reponse data: ", response.data);
+      location.reload();
     })
     .catch(error => {
-      console.log("Error getting plannerItems: ", error);
+      console.log("Error adding user: ", error);
     })
-
 }
 
-function getUsersInPlanner(plannerId) {
-    const config = {
-        params: {"plannerId": plannerId}
-    };
+function addItem(plannerId, userId, day, title, description) {
+  const data = {
+    "id": 0,
+    "plannerId": plannerId,
+    "user": userId,
+    "day": day,
+    "title": title,
+    "description": description,
+    "isDone": false
+  }
 
-    return requests.getInstance().get('/api/Planner/getUsersInPlanner', config)
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            console.log("Error getting users: ", error);
-        })
-
+  return requests.getInstance().post('/api/Planner/addPlannerItem', data)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error adding item: ", error);
+    })
 }
+
+function deletePlanner(plannerId) {
+  const config = {
+    params: {
+      "id": plannerId
+    }
+  }
+
+  return requests.getInstance().delete('/api/Planner/', config)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error deleting planner: ", error);
+    })
+}
+
+function deletePlannerItem(itemId) {
+  const config = {
+    params: {
+      "id": itemId
+    }
+  }
+
+  return requests.getInstance().delete('/api/Planner/plannerItem', config)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error deleting planner: ", error);
+    })
+}
+
+function removeUserFromPlanner(plannerId, username) {
+    const data = {
+      "PlannerId": plannerId,
+      "Username": username
+    }
+
+    return requests.getInstance().post('/api/Planner/removeUserFromPlanner', data)
+      .then(response => {
+        console.log("reponse data: ", response.data);
+        location.reload();
+      })
+      .catch(error => {
+        console.log("Error removing user from planner: ", error);
+      })
+  }

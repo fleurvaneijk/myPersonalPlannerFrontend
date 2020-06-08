@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h3>Delete account</h3>
     <form v-on:submit.prevent="deleteAccount">
       <label for="username">
