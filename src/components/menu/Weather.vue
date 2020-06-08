@@ -1,19 +1,22 @@
 <template>
   <div>
     <h1>Weather</h1>
-    <IFRAME SRC="//gadgets.buienradar.nl/gadget/forecastandstation/6260" NORESIZE SCROLLING=NO HSPACE=0 VSPACE=0 FRAMEBORDER=0 MARGINHEIGHT=0 MARGINWIDTH=0 WIDTH=300 HEIGHT=190></IFRAME>
+    <iframe
+      class="weerplazaWidget"
+      src="https://www.weerplaza.nl/weerwidgets/vandaag/19344/">
+    </iframe>
   </div>
 </template>
 
-<script>
-
-
-  export default {
-
-  }
-</script>
 <style scoped lang="scss">
-  IFRAME {
-    margin: 50px;
+  .weerplazaWidget {
+    margin: 50px 0 0 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    border: 1px solid rgb(244, 244, 244);
+    box-sizing: border-box;
   }
+
 </style>

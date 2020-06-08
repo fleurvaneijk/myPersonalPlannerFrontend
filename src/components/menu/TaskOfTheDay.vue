@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Task of the day</h1>
+    <h1>Tasks of the day</h1>
     <div class="pre-scrollable">
 
       <template v-for="appointment in tasks">
