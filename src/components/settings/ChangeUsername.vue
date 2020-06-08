@@ -49,8 +49,10 @@
   }
 </script>
 <style scoped>
-  label {
-    margin: 5px 0px;
+  input {
+    width: 250px;
+    height: 30px;
+    margin-bottom: 5px;
   }
   button {
     width: 140px;

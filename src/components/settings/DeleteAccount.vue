@@ -42,11 +42,17 @@
     },
   }
 </script>
-<style scoped>
-  label {
-    margin: 5px 0px;
+<style scoped lang="scss">
+  @import "src/variables";
+
+  input {
+    width: 250px;
+    height: 30px;
+    margin-bottom: 5px;
   }
-  button {
+  .btn-danger {
     width: 140px;
+    background-color: $tertiary-orange;
+    border: none;
   }
 </style>
