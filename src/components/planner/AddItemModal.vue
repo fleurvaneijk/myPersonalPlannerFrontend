@@ -41,7 +41,7 @@
     data() {
       return {
         username: null,
-        users: null,
+        users: this.planner.users.models,
         daysInWeek: days,
         userId: null,
         day: null,
