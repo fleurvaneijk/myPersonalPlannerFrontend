@@ -1,10 +1,10 @@
 <template>
   <div id="modal" v-show="value">
-      <H1>Add User</H1>
+    <h1>Create Planner</h1>
     <label>
-      <input type="text" placeholder="Username" v-model="username" required>
+      <input type="text" placeholder="Title" v-model="title" required>
     </label>
-    <button @click="addUser">Submit</button>
+    <button @click="createPlanner">Submit</button>
     <button @click="close">Close</button>
   </div>
 </template>
@@ -13,22 +13,22 @@
   import { plannerService } from "../../services/planner.service";
 
   export default {
-    name: 'AddUserModal',
-    props: ['value', 'plannerId'],
+    name: 'CreatePlannerModal',
+    props: ['value'],
     data() {
       return {
-        username: ""
+        title: ""
       }
     },
     created() {
 
     },
     methods: {
-      addUser() {
-        plannerService.addUser(this.plannerId, this.username);
+      createPlanner() {
+        plannerService.createPlanner(this.title);
       },
       close() {
-        this.$parent.openCloseUserModal();
+        this.$parent.openCloseCreatePlannerModal();
       }
     }
   };

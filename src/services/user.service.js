@@ -10,7 +10,8 @@ export const userService = {
   changePassword,
   deleteAccount,
   getAgendaLink,
-  changeAgendaLink
+  changeAgendaLink,
+  getUserFromLocalstorage
 };
 
 function login(username, password) {
