@@ -19,7 +19,9 @@
 
           <template v-for="item in getItems(day, user)">
 
-            <div class="item" v-bind:key="item.id">
+            <div class="item" id="item" v-bind:key="item.id" @click="setDone(item.id)">
+              <img class="planner-action trash" @click="deleteItem(item.id)" src="../../assets/rubbish.png" alt="Delete task">
+              <img class="planner-action check" src="../../assets/check.png" alt="Delete task">
               <p id="title">{{ item.title }} </p>
               <p id="description">{{ item.description }}</p>
             </div>
@@ -36,6 +38,7 @@
 <script>
   import {days} from "../../store/store";
   import {isNullOrEmpty} from '../../store/actions';
+  import {plannerService} from "../../services/planner.service";
 
   export default ({
     props: ['planner'],
@@ -44,7 +47,6 @@
         this.users = null;
         this.itemsForUser = {};
         this.getItemsForUsers(this.planner.users.models);
-
       }
     },
     data () {
@@ -61,6 +63,7 @@
     methods: {
       isNullOrEmpty(x){
         return isNullOrEmpty(x);
+
       },
 
       getItems(day, user) {
@@ -78,6 +81,23 @@
 
           this.itemsForUser[user.id] = itemsInDay;
         })
+      },
+
+      deleteItem(itemId) {
+        plannerService.deletePlannerItem(itemId);
+      },
+
+      setDone(itemId) {
+        //todo check item when it's done
+        itemId;
+        let element = document.getElementById("item");
+
+        if(element.classList.contains('isDone')){
+          element.classList.remove('isDone');
+        } else {
+          element.classList.add('isDone');
+
+        }
       }
     }
   });
@@ -105,10 +125,11 @@
     }
 
     tbody {
-      tr {
+      overflow: auto;
 
+      tr {
         td#cell {
-          /*max-width: 180px;*/
+          width: 180px;
           border: dotted 1px $tertiary-orange;
           vertical-align: top;
           text-align: center;
@@ -127,15 +148,49 @@
 
         .item {
           text-align: left;
+          cursor: pointer;
           display: inline-block;
           margin: 10px;
           padding: 3px 8px;
-          width: 120px;
+          width: 140px;
           height: 85px;
           border-radius: 5px;
           border: 2px solid $primary-blue-transparent; /*TODO: make color user bound*/
           background-color: $secondary-blue-transparent;
           color: $background-grey;
+          overflow: auto;
+          position: relative;
+
+          img.trash {
+            display: none;
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+          }
+          img.check {
+            display: none;
+            position: absolute;
+            right: 1px;
+            bottom: 1px;
+            width: 30px;
+            height: 30px;
+          }
+
+          p {
+            clear: both;
+          }
+        }
+        .item:hover{
+          img.trash {
+            display: block;
+          }
+        }
+        .item.isDone {
+          img.check {
+            display: block;
+          }
         }
       }
     }
@@ -152,7 +207,7 @@
 
   @media(max-width: 1160px){
     .item {
-      width: 100px !important;
+      width: 110px !important;
       height: 75px !important;
       margin: 3px !important;
     }
