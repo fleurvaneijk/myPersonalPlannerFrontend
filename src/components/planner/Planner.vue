@@ -60,7 +60,6 @@
               </li>
             </ul>
           </div>
-
           <planner-table id="table" :planner="this.currentPlanner"></planner-table>
         </div>
       </div>
@@ -104,8 +103,18 @@
     async created() {
       this.planners = await this.getPlanners();
       if(this.isNullOrEmpty(this.planners) === false){
-        this.currentPlanner = this.planners.models[0];
-        this.checkIfUserIsOwner();
+        if (this.$route.params.id !== undefined) {
+          for (let plannerIndex in this.planners.models) {
+            let planner = this.planners.models[plannerIndex];
+            if (planner.get("id") === Number(this.$route.params.id)){
+              this.changeCurrentPlanner(planner);
+              break;
+            }
+          }
+        }
+        if (this.currentPlanner == null) {
+          this.changeCurrentPlanner(this.planners.models[0]);
+        }
       }
 
     },
@@ -131,8 +140,12 @@
       },
 
       changeCurrentPlanner(planner){
-        this.checkIfUserIsOwner()
+        let path = '/planner/' + planner.id;
         this.currentPlanner = planner;
+        if (this.$route.path !== path) {
+          this.$router.push('/planner/' + planner.id);
+        }
+        this.checkIfUserIsOwner();
       },
 
       openCloseCreatePlannerModal() {

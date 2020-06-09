@@ -38,7 +38,7 @@ export const routes = [
       'header-top': HeaderComponent
     },
     children: [
-      { path: 'table', component: PlannerTableComponent }
+      { path: ':id', component: PlannerTableComponent }
     ],
   },
 

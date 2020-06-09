@@ -1,6 +1,6 @@
 <template>
   <div id="modal" v-show="value">
-    <h2>Add Item</h2>
+    <h2>Add Task</h2>
 
     <form v-if="!isNullOrEmpty(planner.users)">
       <label>
