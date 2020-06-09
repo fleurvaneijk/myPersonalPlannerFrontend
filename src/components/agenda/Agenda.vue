@@ -184,69 +184,56 @@
 
   .wrapper {
     background-color: rgba(255, 255, 255, 0.75);
-    margin: 0 10%;
+    margin: 0 2%;
     padding: 10px 20px;
     height: auto;
   }
 
   table{
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 
     thead{
-      tr{
-        th{
-          position: sticky;
-          top: -10px;
-          background: $primary-blue;
-          color: $secondary-blue;
-          padding: 0.2em;
-          text-align: center;
 
-          span {
-            display: block;
-          }
+      background-color: rgba(255, 255, 255, 0.50);
+      color: $black;
+      border-right: dotted 1px $tertiary-orange;
 
-          &:first-child{
-            border-radius:3px 0 0 0;
-            width: 80px;
-          }
-          &:last-child{
-            border-radius:0 3px  0 0;
-          }
+      th {
+        border-left: dotted 1px $tertiary-orange;
+        border-top: dotted 1px $tertiary-orange;
+        height: 50px;
+        text-align: center;
+        padding: 10px;
 
-          .day{
-            display: block;
-            font-size: 1.2em;
-            border-radius: 15px;
-            width: 30px;
-            height: 30px;
-            margin: 0 auto 5px;
-            padding: 5px;
-            line-height: 25px;
-            vertical-align: middle;
+        span#day-name-short {
+          display: none;
+        }
 
-            &.active{
-              background: $secondary-blue;
-              color: $tertiary-orange;
-            }
-          }
-
-          .long {
-            display: block;
-          }
-
-          .short{
-            display: none;
-          }
-
-          .month {
-            display: block;
-          }
-
-          i{
-            vertical-align: middle;
-            font-size: 2em;
+        span, .long, .month {
+          display: block;
+        }
+        .short{
+          display: none;
+        }
+        i{
+          vertical-align: middle;
+          font-size: 2em;
+        }
+        &:first-child {
+          width: 80px;
+        }
+        .day{
+          display: block;
+          font-size: 1.2em;
+          border-radius: 15px;
+          width: 30px;
+          height: 30px;
+          margin: 0 auto;
+          padding: 5px;
+          vertical-align: middle;
+          &.active{
+            color: $secondary-blue;
           }
         }
       }
@@ -254,33 +241,32 @@
     tbody{
       tr:nth-child(1) {
         text-align: center;
+        border-top: dotted 1px $tertiary-orange;
       }
       tr{
-        background: #ffffff;
-
+        background: $white-transparant;
         td:nth-child(1) {
           text-align: center;
         }
 
         &:nth-child(2n){
-          background: $background-grey;
-          td{
-            border-bottom:1px solid $background-grey;
-          }
+          background: $background-grey-transparant;
         }
         td{
           vertical-align: middle;
-          border-left: 1px solid $background-grey;
+          border-left: dotted 1px $tertiary-orange;;
           height: 20px;
+          border-bottom: dotted 1px $tertiary-orange;
+          border-right: dotted 1px $tertiary-orange !important;
 
           &:last-child{
-            border-right:1px solid $background-grey;
+            border-right:1px solid $background-grey-transparant;
           }
           &.hour{
             font-size: 1em;
             color: $primary-blue;
-            background:#fff;
-            border-bottom:1px solid $background-grey;
+            background: $white-transparant;
+            border-bottom:1px solid $background-grey-transparant;
 
             span{
               display: block;
@@ -288,17 +274,18 @@
           }
         }
         .item {
+          text-align: left;
           display: inline-block;
-          font-size: 0.6em;
-          border: 2px solid $primary-blue;
-          background-color: $secondary-blue;
-          color: $background-grey;
-          padding: 3px 8px;
-          width: 100%;
+          margin: 1px;
+          padding: 3px;
           border-radius: 5px;
-          height: 105%;
-          &.overlapping {
-            color: $tertiary-orange;
+          border: 2px solid $primary-blue-transparent;
+          background-color: $secondary-blue-transparent;
+          color: $background-grey;
+          overflow: auto;
+          position: relative;
+          p {
+            clear: both;
           }
         }
       }
@@ -336,7 +323,6 @@
               padding: 5px;
 
               &.active{
-                background: $tertiary-orange;
                 color: $secondary-blue;
               }
             }
