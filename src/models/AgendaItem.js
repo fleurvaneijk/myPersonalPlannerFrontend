@@ -1,6 +1,6 @@
 import {Model, Collection} from "vue-mc";
 
-export default class PlannerItem extends Model {
+export default class AgendaItem extends Model {
 
   defaults () {
     return {
@@ -9,34 +9,32 @@ export default class PlannerItem extends Model {
       timestampEnd: null,
       title: null,
       description: null,
+      location: null,
       overlapping: []
     }
   }
 
   mutations() {
     return {
-      id: (id) => Number(id) || null,
+      id: String,
       timestampBegin: (timestampBegin) => Number(timestampBegin) || null,
       timestampEnd: (timestampEnd) => Number(timestampEnd) || null,
       title: String,
       description: String,
+      location: String,
       overlapping: []
     }
   }
 
   setOverlapping(overlapping) {
       this.overlapping = overlapping;
-      for (let overlappingItemIndex in overlapping) {
-        let overlappingItem = overlapping[overlappingItemIndex]
-        console.log(overlappingItem);
-      }
   }
 }
 
-export class PlannerItems extends Collection {
+export class AgendaItems extends Collection {
 
   model() {
-    return PlannerItems;
+    return AgendaItem;
   }
 
   getAppointmentsBetweenDates(begin, end) {

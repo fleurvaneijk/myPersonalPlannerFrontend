@@ -3,9 +3,11 @@ import VueRouter from 'vue-router';
 import App from './App.vue'
 import { routes } from './routes.js'
 import 'bootstrap/dist/css/bootstrap.css'
+import VueResource from 'vue-resource';
 import {userService} from "./services/user.service";
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
 
 const router = new VueRouter({
   routes,

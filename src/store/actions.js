@@ -23,7 +23,7 @@ export const isToday = (date) => {
 }
 
 export const getDaysOfWeek = (date) => {
-  var week= [];
+  var week = [];
   var current = date;
   current.setDate((current.getDate() - current.getDay() + 1));
   for (var i = 0; i < 7; i++) {
@@ -35,4 +35,15 @@ export const getDaysOfWeek = (date) => {
   return week;
 }
 
+export const isNullOrEmpty = (x) =>
+{
+  if(x === null || x === "" || x === undefined) {
+    return true;
+  } else if (x.isEmpty()){
+    return true;
+  } else {
+    return false;
+  }
+  // return (x === null || x === "" || x === undefined || x.isEmpty());
+}
 
