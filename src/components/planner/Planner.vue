@@ -27,6 +27,12 @@
                   </button>
                   <create-planner-modal class="custom-modal" v-model="createPlannerModalOpen"></create-planner-modal>
                 </span>
+                <span title="Change planner title">
+                  <button @click="openCloseChangeTitleModal()">
+                    <img class="pencil" src="../../assets/pencil.png" alt="Change planner title">
+                  </button>
+                  <change-planner-title-modal class="custom-modal" v-model="changePlannerTitleModalOpen"></change-planner-title-modal>
+                </span>
                 <span v-if="owner" title="Delete this planner">
                   <button class="left" @click="deletePlanner()">
                     <img class="cross" src="../../assets/cross.png" alt="Delete Planner">
@@ -78,6 +84,7 @@
   import {Planners} from "../../models/Planner";
   import {isNullOrEmpty} from "../../store/actions";
   import {userService} from "../../services/user.service";
+  import ChangePlannerTitleModal from "./ChangePlannerTitleModal";
 
   export default {
     name: 'Planner',
@@ -86,7 +93,8 @@
       "add-user-modal" : AddUserModal,
       "add-item-modal" : AddItemModal,
       "remove-user-modal" : RemoveUserModal,
-      "create-planner-modal" : CreatePlannerModal
+      "create-planner-modal" : CreatePlannerModal,
+      "change-planner-title-modal" : ChangePlannerTitleModal,
     },
     data() {
       return{
@@ -95,6 +103,7 @@
         itemModalOpen: false,
         removeUserModalOpen: false,
         createPlannerModalOpen: false,
+        changePlannerTitleModalOpen: false,
         currentPlanner: null,
         owner: false,
         plannersExist: false
@@ -151,6 +160,11 @@
       openCloseCreatePlannerModal() {
         this.closeOtherModals(this.createPlannerModalOpen);
         this.createPlannerModalOpen = !this.createPlannerModalOpen;
+      },
+
+      openCloseChangeTitleModal() {
+        this.closeOtherModals(this.changePlannerTitleModalOpen);
+        this.changePlannerTitleModalOpen = !this.changePlannerTitleModalOpen;
       },
 
       openCloseItemModal() {
@@ -264,6 +278,10 @@
             height: 25px;
           }
         }
+      }
+
+      .pencil {
+        width: 30px;
       }
 
       ul.grid-item.right {
