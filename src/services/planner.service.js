@@ -7,7 +7,8 @@ export const plannerService = {
   addItem,
   deletePlanner,
   deletePlannerItem,
-  removeUserFromPlanner
+  removeUserFromPlanner,
+  setDone
 };
 
 function getPlanners() {
@@ -109,17 +110,35 @@ function deletePlannerItem(itemId) {
 }
 
 function removeUserFromPlanner(plannerId, username) {
-    const data = {
-      "PlannerId": plannerId,
-      "Username": username
-    }
-
-    return requests.getInstance().post('/api/Planner/removeUserFromPlanner', data)
-      .then(response => {
-        console.log("reponse data: ", response.data);
-        location.reload();
-      })
-      .catch(error => {
-        console.log("Error removing user from planner: ", error);
-      })
+  const data = {
+    "PlannerId": plannerId,
+    "Username": username
   }
+
+  return requests.getInstance().post('/api/Planner/removeUserFromPlanner', data)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error removing user from planner: ", error);
+    })
+}
+
+function setDone(itemId, isDone) {
+  const config = {
+    params: {
+      "itemId": itemId,
+      "isDone": isDone
+    }
+  }
+
+  return requests.getInstance().put('/api/Planner/setDoneItem', null, config)
+    .then(response => {
+      console.log("reponse data: ", response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log("Error deleting planner: ", error);
+    })
+}

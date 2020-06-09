@@ -30,7 +30,9 @@
     }
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
+  @import "src/variables";
+
   .background {
     background-image: url("../../assets/background2.jpg");
     background-size: cover;
@@ -51,9 +53,20 @@
   }
 
   button {
-    width: 140px;
+    width: 160px;
     margin: 5px 0;
   }
+
+  .btn-primary {
+    background-color: $secondary-blue;
+    border: none;
+  }
+
+  .btn-danger {
+    background-color: $tertiary-orange;
+    border: none;
+  }
+
   h3 {
     justify-content: center;
   }

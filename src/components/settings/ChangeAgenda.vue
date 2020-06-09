@@ -61,4 +61,9 @@
     cursor: pointer;
     color: $tertiary-orange
   }
+  input {
+    width: 400px;
+    height: 30px;
+    margin-bottom: 10px;
+  }
 </style>

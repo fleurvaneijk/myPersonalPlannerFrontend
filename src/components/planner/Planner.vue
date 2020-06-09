@@ -5,7 +5,7 @@
       <br>
       <div id="start" v-if="!plannersExist">
         <h3>You don't have any planners yet!</h3>
-        <img class="start-planner" @click="openCloseCreatePlannerModal" src="../../assets/create.png" alt="Create new planner">
+        <img @click="openCloseCreatePlannerModal" src="../../assets/create.png" alt="Create new planner">
         <p>Create a planner!</p>
         <create-planner-modal class="custom-modal" v-model="createPlannerModalOpen"></create-planner-modal>
       </div>
@@ -23,13 +23,13 @@
                 </select>
                 <span title="Create new planner">
                   <button class="left" @click="openCloseCreatePlannerModal()">
-                    <img class="planner-action plus" src="../../assets/plus.png" alt="Add Planner">
+                    <img class="plus" src="../../assets/plus.png" alt="Add Planner">
                   </button>
                   <create-planner-modal class="custom-modal" v-model="createPlannerModalOpen"></create-planner-modal>
                 </span>
                 <span v-if="owner" title="Delete this planner">
                   <button class="left" @click="deletePlanner()">
-                    <img class="planner-action cross" src="../../assets/cross.png" alt="Delete Planner">
+                    <img class="cross" src="../../assets/cross.png" alt="Delete Planner">
                   </button>
                 </span>
               </label>
@@ -39,21 +39,21 @@
             <ul class="grid-item right">
               <li>
                 <button @click="openCloseItemModal()">
-                  <img class="planner-action" src="../../assets/create.png" alt="Add task">
+                  <img class="wand" src="../../assets/create.png" alt="Add task">
                   <p>Add Task</p>
                 </button>
                 <add-item-modal class="custom-modal" :planner="this.currentPlanner" v-model="itemModalOpen"></add-item-modal>
               </li>
               <li v-if="owner">
                 <button @click="openCloseUserModal()">
-                  <img class="planner-action" src="../../assets/create.png" alt="Add user">
+                  <img class="wand" src="../../assets/create.png" alt="Add user">
                   <p>Add User</p>
                 </button>
                 <add-user-modal class="custom-modal" :plannerId="this.currentPlanner.id" v-model="userModalOpen"></add-user-modal>
               </li>
               <li v-if="owner">
                 <button @click="openCloseRemoveUserModal()">
-                  <img class="planner-action cross" src="../../assets/cross.png" alt="Remove user">
+                  <img class="cross" src="../../assets/cross.png" alt="Remove user">
                   <p>Remove User</p>
                 </button>
                 <remove-user-modal class="custom-modal" :planner="this.currentPlanner" v-model="removeUserModalOpen"></remove-user-modal>
@@ -136,6 +136,7 @@
       },
 
       openCloseCreatePlannerModal() {
+        this.closeOtherModals(this.createPlannerModalOpen);
         this.createPlannerModalOpen = !this.createPlannerModalOpen;
       },
 
@@ -161,6 +162,8 @@
           this.userModalOpen = false
         } else if (this.removeUserModalOpen && this.removeUserModalOpen !== modal) {
           this.removeUserModalOpen = false;
+        } else if (this.createPlannerModalOpen && this.createPlannerModalOpen !== modal){
+          this.createPlannerModalOpen = false;
         }
       },
 
@@ -172,7 +175,7 @@
   }
 </script>
 
-<style scoped lang="scss"> /*todo: cleanup this styling mess*/
+<style scoped lang="scss">
   @import "src/variables";
 
   .background {
@@ -186,32 +189,14 @@
 
     h1 {
       padding-top: 30px;
-    }
-
-    h1, h3 {
       margin-left: 50px;
-    }
-
-    .dropdown {
-      background-color: #fcf0f7;
-      border: 0.1px solid white;
-      border-radius: 3px;
-      height: 40px;
-      min-width: 250px;
-      font-size: 1.8em;
-
-      #option {
-        font-size: 1em;
-      }
     }
 
     #start {
       width: 100%;
-      display: inline-block;
       text-align: center;
 
-      img.start-planner {
-        zoom: 100%;
+      img {
         margin: 50px auto 10px;
         cursor: pointer;
       }
@@ -225,48 +210,71 @@
     #planner {
       .grid-container{
         margin-left: 4%;
-      }
-
-      ul.right {
-        float: right;
-        padding-right: 10px;
-      }
-
-      div.left {
-        float: left;
-        padding-left: 10px;
+        height: 65px;
       }
 
       .grid-item {
         display: inline-block;
         list-style: none;
+        margin: 0;
+      }
 
-        button{
-          padding: 0;
-          width: 70px;
-          height: 60px;
-          background-color: transparent;
-          border-color: transparent;
+      button{
+        padding: 0;
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      div.grid-item.left {
+        select.dropdown {
+          cursor: pointer;
+          background-color: #fcf0f7;
+          border: 0.1px solid white;
+          border-radius: 3px;
+          height: 40px;
+          min-width: 250px;
+          font-size: 1.8em;
+          vertical-align: bottom;
         }
+
+        button.left{
+          height: 40px;
+          width: 40px;
+
+          img {
+            margin: auto 5px;
+            width: 30px;
+            height: 30px;
+          }
+          img.cross {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+
+      ul.grid-item.right {
+        float: right;
+        padding-right: 10px;
 
         li {
           margin: 0 10px;
           display: inline-block;
+          height: 100%;
+          vertical-align: bottom;
         }
 
-        img.planner-action {
+        button.right {
+          height: 70px;
+        }
+        img.wand{
           width: 38px;
           height: 38px;
         }
         img.cross {
-          width: 25px;
-          height: 25px;
-        }
-        img.plus {
-          width: 30px;
-          height: 30px;
-          vertical-align: center;
-
+          width: 27px;
+          height: 27px;
+          margin-bottom: 3px;
         }
 
         p{
@@ -274,23 +282,6 @@
           margin: 0;
           font-weight: bold;
         }
-      }
-
-      label{
-        margin-bottom: 0;
-      }
-
-      select {
-        cursor: pointer;
-      }
-
-      button.left{
-        height: 40px;
-        width: 40px;
-      }
-
-      #table {
-        margin-top: 1%;
       }
     }
 
@@ -302,14 +293,9 @@
       background-color: white;
       border: 1px solid $primary-blue;
       border-radius: 3px;
-      width: 20%;
-      min-width: 250px;
-      height: 40%;
-      min-height: 300px;
       text-align: center;
       z-index: 1;
     }
-
   }
 
   @media(max-width:1620px){

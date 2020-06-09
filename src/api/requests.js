@@ -8,7 +8,7 @@ makeInstance();
 function makeInstance() {
   instance = axios.create({
     baseURL: process.env.VUE_APP_BACKEND_SERVER,
-    timeout: 1000,
+    timeout: 3000,
     headers: authHeader.getHeader()
   });
 }

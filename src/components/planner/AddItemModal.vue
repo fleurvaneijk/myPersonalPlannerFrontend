@@ -1,15 +1,17 @@
 <template>
   <div id="modal" v-show="value">
-    <H1>Add Item</H1>
+    <h2>Add Item</h2>
 
     <form v-if="!isNullOrEmpty(planner.users)">
       <label>
+        <p>Choose User:</p>
         <select @change="changeUser(username)" v-model="username" required>
           <option  v-for="user in users" v-bind:key="user.id"
                    :value="user.username">{{user.username}}
           </option>
         </select>
-        <br>
+
+        <p>Choose Day:</p>
         <select @change="changeDay(day)" v-model="day" required>
           <option  v-for="day in daysInWeek" v-bind:key="day.id"
                    :value="day">{{day.long}}
@@ -20,8 +22,8 @@
       </label>
     </form>
 
-    <button @click="addItem">Submit</button>
-    <button @click="close">Close</button>
+    <button class="btn btn-primary"  @click="addItem">Submit</button>
+    <button class="btn btn-danger" @click="close">Close</button>
   </div>
 </template>
 
@@ -41,11 +43,11 @@
     data() {
       return {
         username: null,
-        users: null,
+        users: this.planner.users.models,
         daysInWeek: days,
         userId: null,
         day: null,
-        title: "",
+        title: null,
         description: "",
       }
     },
@@ -79,4 +81,50 @@
 <style scoped lang="scss" >
   @import "src/variables";
 
+  #modal {
+    width: 20%;
+    min-width: 280px;
+    height: 40%;
+    min-height: 326px;
+  }
+
+  h2 {
+    margin: 20px 10px;
+  }
+
+  p {
+    margin-bottom: 2px;
+  }
+
+  label {
+    width: 100%;
+  }
+
+  select {
+    width: 90%;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+
+  input {
+    width: 90%;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+
+  .btn-primary {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: $secondary-blue;
+    border: none;
+  }
+
+  .btn-danger {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background-color: $tertiary-orange;
+    border: none;
+  }
 </style>

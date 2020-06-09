@@ -19,9 +19,9 @@
 
           <template v-for="item in getItems(day, user)">
 
-            <div class="item" id="item" v-bind:key="item.id" @click="setDone(item.id)">
-              <img class="planner-action trash" @click="deleteItem(item.id)" src="../../assets/rubbish.png" alt="Delete task">
-              <img class="planner-action check" src="../../assets/check.png" alt="Delete task">
+            <div class="item" id="item" v-bind:key="item.id" @click="setDone(item)">
+              <img class="trash" @click="deleteItem(item.id)" src="../../assets/rubbish.png" alt="Delete task">
+              <img v-if="item.isDone" class="check" src="../../assets/check.png" alt="Delete task">
               <p id="title">{{ item.title }} </p>
               <p id="description">{{ item.description }}</p>
             </div>
@@ -87,17 +87,8 @@
         plannerService.deletePlannerItem(itemId);
       },
 
-      setDone(itemId) {
-        //todo check item when it's done
-        itemId;
-        let element = document.getElementById("item");
-
-        if(element.classList.contains('isDone')){
-          element.classList.remove('isDone');
-        } else {
-          element.classList.add('isDone');
-
-        }
+      setDone(item) {
+        plannerService.setDone(item.id, !item.isDone);
       }
     }
   });
@@ -153,9 +144,9 @@
           margin: 10px;
           padding: 3px 8px;
           width: 140px;
-          height: 85px;
+          height: 90px;
           border-radius: 5px;
-          border: 2px solid $primary-blue-transparent; /*TODO: make color user bound*/
+          border: 2px solid $primary-blue-transparent;
           background-color: $secondary-blue-transparent;
           color: $background-grey;
           overflow: auto;
@@ -170,7 +161,7 @@
             height: 20px;
           }
           img.check {
-            display: none;
+            display: block;
             position: absolute;
             right: 1px;
             bottom: 1px;
@@ -184,11 +175,6 @@
         }
         .item:hover{
           img.trash {
-            display: block;
-          }
-        }
-        .item.isDone {
-          img.check {
             display: block;
           }
         }
