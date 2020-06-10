@@ -6,10 +6,13 @@
       <label>
         <p>Choose User:</p>
         <select @change="changeUser(username)" v-model="username" required>
-          <option  v-for="user in users" v-bind:key="user.id"
+        <template v-for="user in users">
+          <option  v-bind:key="user.id"
+                   v-if="user.id !== planner.owner"
                    :value="user.username">{{user.username}}
           </option>
-        </select>
+        </template>
+          </select>
       </label>
     </form>
 
@@ -25,15 +28,18 @@
   export default {
     name: 'RemoveUserModal',
     props: ['value', 'planner'],
+    watch: {
+      planner: function() {
+        this.users = this.planner.users.models;
+      }
+    },
     data() {
       return {
         username: null,
         users: this.planner.users.models,
       }
     },
-    created() {
 
-    },
     methods: {
       removeUser() {
         plannerService.removeUserFromPlanner(this.planner.id, this.username);

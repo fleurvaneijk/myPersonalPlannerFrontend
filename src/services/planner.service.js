@@ -3,6 +3,7 @@ import {requests} from "../api/requests";
 export const plannerService = {
   getPlanners,
   createPlanner,
+  changePlannerTitle,
   addUser,
   addItem,
   deletePlanner,
@@ -27,7 +28,6 @@ function createPlanner(title) {
       "title": title
     }
   }
-
   return requests.getInstance().post('/api/Planner/createPlanner', null, config)
     .then(response => {
       console.log("reponse data: ", response.data);
@@ -35,6 +35,24 @@ function createPlanner(title) {
     })
     .catch(error => {
       console.log("Error creating planner: ", error);
+    })
+}
+
+function changePlannerTitle(id, title) {
+  console.log(id, title);
+  const config = {
+    params: {
+      "plannerId": id,
+      "title": title
+    }
+  }
+  return requests.getInstance().put('/api/Planner/SetPlannerTitle', null, config)
+  .then(response => {
+    console.log("response data: ", response.data);
+    location.reload();
+    })
+    .catch(error => {
+      console.log("Error renaming planner: " + error);
     })
 }
 
