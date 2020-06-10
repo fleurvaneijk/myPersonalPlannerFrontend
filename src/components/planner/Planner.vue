@@ -27,7 +27,7 @@
                   </button>
                   <create-planner-modal class="custom-modal" v-model="createPlannerModalOpen"></create-planner-modal>
                 </span>
-                <span title="Change planner title">
+                <span v-if="owner" title="Change planner title">
                   <button @click="openCloseChangeTitleModal()">
                     <img class="pencil" src="../../assets/pencil.png" alt="Change planner title">
                   </button>
