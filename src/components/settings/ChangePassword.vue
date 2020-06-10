@@ -2,6 +2,12 @@
   <div>
     <h3>Change password</h3>
     <form v-on:submit.prevent="changePassword">
+      <div class="alert alert-danger" role="alert" v-if="error">
+        Passwords do not match
+      </div>
+      <div class="alert alert-success" role="alert" v-if="success">
+        Password is changed
+      </div>
       <label for="username">
         <input type="text" placeholder="Username" id="username" v-model="changePasswordUser.username" required>
       </label>
@@ -35,6 +41,8 @@
           newPassword: null,
         },
         confirmNewPassword: null,
+        success: false,
+        error: false
       }
     },
     methods: {
@@ -42,11 +50,17 @@
         if (this.changePasswordUser.username == null || this.changePasswordUser.username === "" ||
           this.changePasswordUser.password == null || this.changePasswordUser.password === "" ||
           this.changePasswordUser.newPassword == null || this.changePasswordUser.newPassword === "") {
-          console.log("Null found");
+          this.error = true;
         } else if(this.changePasswordUser.password === this.confirmNewPassword) {
-          console.log("Password can not be the same");
+          this.error = true
         } else if(this.changePasswordUser.newPassword === this.confirmNewPassword) {
-          userService.changePassword(this.changePasswordUser.username, this.changePasswordUser.password, this.changePasswordUser.newPassword);
+          userService.changePassword(this.changePasswordUser.username, this.changePasswordUser.password, this.changePasswordUser.newPassword)
+            .then(() => {
+              this.success = true;
+            })
+            .catch(() => {
+              this.error = true;
+            });
         } else {
           console.log("New password not identical");
         }

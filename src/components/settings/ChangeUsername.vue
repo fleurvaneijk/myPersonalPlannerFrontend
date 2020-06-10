@@ -2,6 +2,12 @@
   <div>
     <h3>Change username</h3>
     <form v-on:submit.prevent="changeUsername">
+      <div class="alert alert-danger" role="alert" v-if="error">
+        Username is taken or Password is wrong
+      </div>
+      <div class="alert alert-success" role="alert" v-if="success">
+        Username is changed
+      </div>
     <label for="oldUsername">
         <input type="text" placeholder="Username" id="oldUsername" v-model="changeUsernameUser.username" required>
       </label>
@@ -22,14 +28,16 @@
 <script>
   import {userService} from "../../services/user.service";
 
-  export default {
+  export default ({
     data() {
       return {
         changeUsernameUser: {
           username: null,
           password: null,
           newUsername: null,
-        }
+        },
+        error: false,
+        success: false
       }
     },
 
@@ -40,13 +48,19 @@
           this.changeUsernameUser.password == null || this.changeUsernameUser.password === "") {
           console.log("null found");
         } else if(this.changeUsernameUser.username !== this.changeUsernameUser.newUsername) {
-          userService.changeUsername(this.changeUsernameUser.username, this.changeUsernameUser.password, this.changeUsernameUser.newUsername);
+          userService.changeUsername(this.changeUsernameUser.username, this.changeUsernameUser.password, this.changeUsernameUser.newUsername)
+            .then(() => {
+              this.success = true;
+            })
+            .catch(() => {
+              this.error = true;
+          })
         } else {
-          console.log("Username can not be the same");
+          this.error = true;
         }
       }
     },
-  }
+  })
 </script>
 <style scoped>
   input {
