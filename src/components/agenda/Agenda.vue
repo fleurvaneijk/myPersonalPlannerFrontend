@@ -184,9 +184,8 @@
 
   .wrapper {
     background-color: rgba(255, 255, 255, 0.75);
-    margin: 0 2%;
+    margin: 0 1%;
     padding: 10px 20px;
-    height: auto;
   }
 
   table{
