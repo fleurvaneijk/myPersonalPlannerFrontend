@@ -43,7 +43,9 @@
 
     methods: {
       changeAgenda() {
-        userService.changeAgendaLink(this.agendaLink);
+        userService.changeAgendaLink(this.agendaLink).then(() => {
+          this.$router.push("/agenda")
+        })
       }
     },
   })

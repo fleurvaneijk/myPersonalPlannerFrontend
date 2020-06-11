@@ -122,6 +122,7 @@
       getAppointments(id, index) {
         let timestampBegin = this.getTimeStamp(id, index);
         let timestampEnd = this.getTimeStamp(id, index + 1);
+        timestampBegin.setMinutes(1);
         let items = this.appointmentsInWeek[id].getAppointmentsBetweenDates(timestampBegin, timestampEnd);
         return items.models;
       },
