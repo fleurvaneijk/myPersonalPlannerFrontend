@@ -53,7 +53,8 @@
       return {
         daysInWeek: days,
         users: null,
-        itemsForUser: {}
+        itemsForUser: {},
+        deleteClicked: false
       }
     },
     created() {
@@ -85,10 +86,13 @@
 
       deleteItem(itemId) {
         plannerService.deletePlannerItem(itemId);
+        this.deleteClicked = true;
       },
 
       setDone(item) {
-        plannerService.setDone(item.id, !item.isDone);
+        if(!this.deleteClicked){
+          plannerService.setDone(item.id, !item.isDone);
+        }
       }
     }
   });

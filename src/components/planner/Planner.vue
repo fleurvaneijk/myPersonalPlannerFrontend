@@ -111,7 +111,7 @@
     },
     async created() {
       this.planners = await this.getPlanners();
-      if(this.isNullOrEmpty(this.planners) === false){
+      if(!this.isNullOrEmpty(this.planners)){
         if (this.$route.params.id !== undefined) {
           for (let plannerIndex in this.planners.models) {
             let planner = this.planners.models[plannerIndex];
